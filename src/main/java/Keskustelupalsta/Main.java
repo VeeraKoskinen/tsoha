@@ -59,6 +59,11 @@ public class Main {
         //keskustelulistaus
         
         //viestilistaus
+        get("/kanttarelli", (req, res) -> {
+            HashMap map = new HashMap<>(); 
+            return new ModelAndView(map, "viestilistaus");
+        }, new ThymeleafTemplateEngine());
+        
         
         // yksityinen keskustelu ??
         
