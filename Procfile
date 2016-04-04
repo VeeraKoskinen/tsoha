@@ -1,1 +1,1 @@
-java -cp target/classes:target/dependency/* tsoha.Main
+java -cp target/classes:target/dependency/* Keskustelupalsta.Main
