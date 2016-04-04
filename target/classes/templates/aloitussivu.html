@@ -1,0 +1,74 @@
+
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+         <title>Otsikko</title>
+         <meta charset="utf-8" />
+         <style>
+             
+            table, th, td{
+                border: 1px solid dodgerblue;
+                border-collapse: collapse;
+            }
+            th, td{
+                padding: 5px;
+            }
+            th{
+                text-align: left;
+            }
+
+            body {
+                background-color: dodgerblue;
+                font-family: arial;
+                font-style: black;
+                text-align: center;
+            }
+            
+            input{
+                border-radius: 5px
+            }
+            
+            /* unvisited link */
+            a:link {
+                color: black;
+            }
+
+            /* visited link */
+            a:visited {
+                color: darkslateblue;
+            }
+
+            /* mouse over link */
+            a:hover {
+                color: purple;
+            }
+
+            /* selected link */
+            a:active {
+                color: purple;
+            }
+        </style>
+    </head>
+       
+    <body>
+        
+    <br></br> <br></br> <br></br> <br></br>
+    
+    <h1 style="font-family:Copperplate Gothic Bold">Otsikko</h1>
+    
+    
+    <h3> Kirjaudu sisään</h3>
+    
+        <form action="/tatti" method="POST">
+            <h4>Käyttäjänimi</h4>
+            <input  type="text" name="kayttajanimi"/>
+            <br></br> 
+            <h4>Salasana</h4>
+            <input type="text" name="salasana"/>
+            <br></br>    
+            <button type="submit">kirjaudu</button>
+        </form>
+    
+    </body>
+</html>

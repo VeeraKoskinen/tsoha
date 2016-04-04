@@ -7,6 +7,9 @@ package Keskustelupalsta;
 
 import java.util.*;
 import java.sql.*;
+import spark.ModelAndView;
+import static spark.Spark.*;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 
 /**
@@ -15,17 +18,47 @@ import java.sql.*;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:testi.db");
-
-        Statement statement = connection.createStatement();
-
-        ResultSet resultSet = statement.executeQuery("SELECT 1");
-
-        if(resultSet.next()) {
-            System.out.println("Hei tietokantamaailma!");
-        } else {
-            System.out.println("Yhteyden muodostaminen epäonnistui.");
+        
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
         }
+        
+         // käytetään oletuksena paikallista sqlite-tietokantaa
+        String jdbcOsoite = "jdbc:sqlite:keskustelupalsta.db";
+        // jos heroku antaa käyttöömme tietokantaosoitteen, otetaan se käyttöön
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+        } 
+    
+        Database database = new Database(jdbcOsoite);
+        database.setDebugMode(true);
+        
+        AlueDao alueDao = new AlueDao(database);
+        KayttajaDao kayttajaDao = new KayttajaDao(database);
+        KeskusteluDao keskusteluDao = new KeskusteluDao(database, alueDao);
+        ViestiDao viestiDao = new ViestiDao(database, keskusteluDao, kayttajaDao);
+        
+        
+        //aloitussivu
+        get("/tatti", (req, res) -> {
+            HashMap map = new HashMap<>(); 
+            return new ModelAndView(map, "aloitussivu");
+        }, new ThymeleafTemplateEngine());
+        post("/", (req, res) -> { 
+            res.redirect("/");
+            return "Kirjautuminen onnistui!";
+        });
+        
+        
+        //omaProfiili (aluelistaus, henkilot)
+        
+        //keskustelulistaus
+        
+        //viestilistaus
+        
+        // yksityinen keskustelu ??
+        
+        
     }    
     
 }

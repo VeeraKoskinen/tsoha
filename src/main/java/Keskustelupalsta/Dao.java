@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public interface Dao <T, K> {
     T findOne(K key) throws SQLException;
-    T findAll() throws SQLException;
+   
     void delete(K key) throws SQLException;
     
 }

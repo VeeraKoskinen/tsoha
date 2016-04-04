@@ -1,25 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author veerakoskinen
- */
+package Keskustelupalsta;
+
+import java.util.*;
+
+
 public class Kayttaja {
     
     private int id;
     private String kayttajanimi;
     private String salasana;
     private String sahkoposti;
+    private Boolean moderaattori;
     
     public Kayttaja() {
         
     }
     
     public Kayttaja(int id, String kayttajanimi, String salasana, String sPosti) {
+        this.moderaattori = false;
         this.id = id;
         this.kayttajanimi = kayttajanimi;
         this.sahkoposti = sPosti;
@@ -64,6 +62,14 @@ public class Kayttaja {
     
     public void setSahkoposti(String sahkoposti) {
         this.sahkoposti = sahkoposti;
+    }
+    
+    public Boolean getModeraattori() {
+        return moderaattori;
+    }
+    
+    public void setModeraattori(Boolean oikeus) {
+        moderaattori = oikeus;
     }
     
 }
