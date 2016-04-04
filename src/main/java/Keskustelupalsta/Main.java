@@ -44,13 +44,17 @@ public class Main {
             HashMap map = new HashMap<>(); 
             return new ModelAndView(map, "aloitussivu");
         }, new ThymeleafTemplateEngine());
-        post("/", (req, res) -> { 
-            res.redirect("/");
+        post("/kanttarelli", (req, res) -> { 
+            res.redirect("/kanttarelli");
             return "Kirjautuminen onnistui!";
         });
         
         
         //omaProfiili (aluelistaus, henkilot)
+        get("/kanttarelli", (req, res) -> {
+            HashMap map = new HashMap<>(); 
+            return new ModelAndView(map, "aluelistaus");
+        }, new ThymeleafTemplateEngine());
         
         //keskustelulistaus
         

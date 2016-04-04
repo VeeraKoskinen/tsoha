@@ -1,7 +1,5 @@
-
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    
     <head>
          <title>Otsikko</title>
          <meta charset="utf-8" />
@@ -21,8 +19,8 @@
             body {
                 background-color: dodgerblue;
                 font-family: arial;
-                font-style: orange;
-                text-align: center;
+                font-style: black;
+                
             }
             
             input{
@@ -50,25 +48,44 @@
             }
         </style>
     </head>
-       
-    <body>
+    
+     <body>
         
-    <br></br> <br></br> <br></br> <br></br>
+    <br></br> 
     
     <h1 style="font-family:Copperplate Gothic Bold">Otsikko</h1>
+    <br></br>
     
     
-    <h3> Kirjaudu sisään</h3>
     
-        <form action="/tatti" method="POST">
-            <h4>Käyttäjänimi</h4>
-            <input  type="text" name="kayttajanimi"/>
-            <br></br> 
-            <h4>Salasana</h4>
-            <input type="text" name="salasana"/>
-            <br></br>    
-            <button type="submit">kirjaudu</button>
+    <table style="width:100%">
+            <tr>
+                <th>Alueet </th>
+                <th>Viestejä yhteensä </th>
+                <th>Viimeisin viesti </th>
+            </tr>
+
+            <tr>
+                <td>Virkistäytyminen</td>
+                <td>7</td>
+                <td>01.03.95  12:30</td> 
+            </tr>
+            <tr>
+                <td>Virkistäytyminen</td>
+                <td>7</td>
+                <td>01.03.95  12:30</td> 
+            </tr>
+        </table>
+    
+        <form action="/kanttarelli" method="POST">
+            <h4>Lisaa alue:</h4>
+            <input  type="text" name="otsikko"/>  
+            <br></br>
+            <button style="color: blue" type="submit">LISÄÄ</button>
         </form>
     
     </body>
+    
+    
+    
 </html>
