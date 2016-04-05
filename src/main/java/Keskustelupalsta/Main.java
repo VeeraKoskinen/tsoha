@@ -5,11 +5,11 @@
  */
 package Keskustelupalsta;
 
-import java.util.*;
-import java.sql.*;
-import spark.ModelAndView;
 import static spark.Spark.*;
+import java.util.*;
+import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
 
 
 /**
