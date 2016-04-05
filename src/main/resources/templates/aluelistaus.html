@@ -8,23 +8,27 @@
             table, th, td{
                 border: 1px solid dodgerblue;
                 border-collapse: collapse;
+                text-align: center;
             }
             th, td{
                 padding: 5px;
+                text-align: center;
             }
             th{
-                text-align: left;
+                text-align: center;
             }
 
             body {
                 background-color: dodgerblue;
-                font-family: arial;
-                font-style: black;
+                font-family: Bree Serif;
+                font-style: normal;
+                color: orange;
+                text-align: center;
                 
             }
             
             input{
-                border-radius: 5px
+                border-radius: 5px    
             }
             
             /* unvisited link */
@@ -50,10 +54,11 @@
     </head>
     
      <body>
-        
+         <button style="color: blue; background-color: orange" type="submit">Takaisin</button>    
     <br></br> 
     
-    <h1 style="font-family:Copperplate Gothic Bold">Otsikko</h1>
+    
+    <h1 style="font-family:Copperplate Gothic Bold; text-align: left">Otsikko</h1>
     <br></br>
     
     
@@ -78,10 +83,10 @@
         </table>
     
         <form action="/kanttarelli" method="POST">
-            <h4>Lisaa alue:</h4>
+            <h4>Lisaa uusi aihe:</h4>
             <input  type="text" name="otsikko"/>  
             <br></br>
-            <button style="color: blue" type="submit">LISÄÄ</button>
+            <button style="color: blue; background-color: orange" type="submit">LISÄÄ</button>
         </form>
     
     </body>

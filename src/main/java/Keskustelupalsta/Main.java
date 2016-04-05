@@ -57,13 +57,12 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         
         //keskustelulistaus
-        
-        //viestilistaus
-        get("/kanttarelli", (req, res) -> {
+        get("/vahvero", (req, res) -> {
             HashMap map = new HashMap<>(); 
-            return new ModelAndView(map, "viestilistaus");
+            return new ModelAndView(map, "keskustelulistaus");
         }, new ThymeleafTemplateEngine());
         
+        //viestilistaus
         
         // yksityinen keskustelu ??
         
