@@ -5,8 +5,6 @@
 
 [dokumentaatio](doc.pdf)
 
-[nettisivu](https://evening-dawn-79596.herokuapp.com/)
+[nettisivu](https://evening-dawn-79596.herokuapp.com/uHup)
 
-[staattinen aloitussivu](https://evening-dawn-79596.herokuapp.com/tatti)
-
-[staattinen aluelistaussivu](https://evening-dawn-79596.herokuapp.com/kanttarelli)
+[aluelistaussivu](https://evening-dawn-79596.herokuapp.com/uHup/kayttajaId)
