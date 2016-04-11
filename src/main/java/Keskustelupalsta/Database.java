@@ -22,7 +22,7 @@ public class Database <T> {
     public Database(String databaseAddress) throws ClassNotFoundException {
         this.databaseAddress = databaseAddress;
         
-//        init();
+        init();
 
     }
     
@@ -49,7 +49,10 @@ public class Database <T> {
         ArrayList<String> lista = new ArrayList<>();
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
-        
+        lista.add("DROP TABLE IF EXISTS Viesti;");
+        lista.add("DROP TABLE IF EXISTS Keskustelu;");
+        lista.add("DROP TABLE IF EXISTS Alue;");
+        lista.add("DROP TABLE IF EXISTS Kayttaja;");
         // heroku käyttää SERIAL-avainsanaa uuden tunnuksen automaattiseen luomiseen
         
         return lista;

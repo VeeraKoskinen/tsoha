@@ -59,11 +59,11 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 //        return findAll(0);
 //    }
 
-    public ArrayList findAll(int offset) throws SQLException {
+    public ArrayList findAll(int keskustelu) throws SQLException {
 
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE keskustelu = ?");
-            stmt.setInt(1, offset * 10);
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE keskustelu = ? ORDER BY id;");
+            stmt.setInt(1, keskustelu);
             ResultSet rs = stmt.executeQuery();
             
             Map<Integer, List<Viesti>> keskustelunViestit = new HashMap<>();
@@ -81,24 +81,24 @@ public class ViestiDao implements Dao<Viesti, Integer> {
                 
                 viestit.add(v);
 
-                Integer keskustelu = rs.getInt("keskustelu");
-                if (!keskustelunViestit.containsKey(keskustelu)) {
+                Integer keskustelunaloitus = rs.getInt("keskustelu");
+                if (!keskustelunViestit.containsKey(keskustelunaloitus)) {
                     keskustelunViestit.put(keskustelu, new ArrayList<>());
                 }
-                keskustelunViestit.get(keskustelu).add(v);
+                keskustelunViestit.get(keskustelunaloitus).add(v);
             }
 
             rs.close();
             stmt.close();
             
-            ArrayList<Keskustelu> keskustelut = this.keskusteluDao.findAll();
-            for (Keskustelu keskustelu : keskustelut) {
-                if (!keskustelunViestit.containsKey(keskustelu.getId())) {
+            ArrayList<Keskustelu> keskustelut = this.keskusteluDao.pureFindAll();
+            for (Keskustelu k : keskustelut) {
+                if (!keskustelunViestit.containsKey(k.getId())) {
                     continue;
                 }
 
-                for (Viesti viesti : keskustelunViestit.get(keskustelu.getId())) {
-                    viesti.setKeskustelu(keskustelu);
+                for (Viesti viesti : keskustelunViestit.get(k.getId())) {
+                    viesti.setKeskustelu(k);
                 }
             }
 
@@ -109,7 +109,23 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try (Connection connection = data.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Viesti WHERE id = ?;");
+            stmt.setObject(1, key);
+            stmt.executeUpdate();
+        }    
+    }
+    
+    public void addNew(String viesti, int kayttaja, int keskustelu) throws SQLException {
+        Connection connection = data.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Viesti (viesti, kayttaja, keskustelu) VALUES(?, ?, ?);");
+        stmt.setString(1, viesti);
+        stmt.setInt(2, kayttaja);
+        stmt.setInt(3, keskustelu);
+        stmt.executeUpdate();
+        
+        stmt.close();
+        connection.close();
     }
 
 }

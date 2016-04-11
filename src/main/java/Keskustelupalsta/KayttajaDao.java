@@ -26,7 +26,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer>{
     @Override
     public Kayttaja findOne(Integer key) throws SQLException {
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja WHERE id = ?");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja WHERE id = ?;");
             stmt.setObject(1, key);
 
             ResultSet rs = stmt.executeQuery();
@@ -48,15 +48,45 @@ public class KayttajaDao implements Dao<Kayttaja, Integer>{
             return k;
         }
     }
+    
+    public String moderaattoriFindOne(String kayttajanimi) throws SQLException {
+        try (Connection connection = data.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja WHERE kayttajanimi = ?;");
+            stmt.setObject(1, kayttajanimi);
+
+            ResultSet rs = stmt.executeQuery();
+            boolean hasOne = rs.next();
+            if (!hasOne) {
+                return null;
+            }
+
+            Integer id = rs.getInt("id");
+            String salasana = rs.getString("salasana");
+            String nimi = rs.getString("kayttajanimi");
+            String sahkoposti = rs.getString("sahkoposti");
+
+            Kayttaja k = new Kayttaja(id, nimi, salasana, sahkoposti);
+
+            rs.close();
+            stmt.close();
+            
+            if (k.getModeraattori() == 1) {
+                return "Kayttajanimi: " + k.getKayttajanimi() + "\n Salasana" + k.getSalasana() + "\n Sahkoposti: " + k.getSahkoposti() + "\n ID: " + k.getId() + "Moderaattori: KYLLÄ";
+            }
+
+            return "Kayttajanimi: " + k.getKayttajanimi() + "\n Salasana" + k.getSalasana() + "\n Sahkoposti: " + k.getSahkoposti() + "\n ID: " + k.getId() + "Moderaattori: EI";
+        }
+       
+    }
       
 
     
-    public List findAll() throws SQLException {
+    public ArrayList<Kayttaja> findAll() throws SQLException {
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja;");
 
             ResultSet rs = stmt.executeQuery();
-            List<Kayttaja> kayttajat = new ArrayList<>();
+            ArrayList<Kayttaja> kayttajat = new ArrayList<>();
             while (rs.next()) {
                 Integer id = rs.getInt("id");
                 String kayttajanimi = rs.getString("kayttajanimi");
@@ -76,7 +106,24 @@ public class KayttajaDao implements Dao<Kayttaja, Integer>{
 
     @Override
     public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try (Connection connection = data.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Kayttaja WHERE id = ?;");
+            stmt.setObject(1, key);
+            stmt.executeUpdate();
+        }    
+    }
+    
+     public void addNew(String sahkoposti, String kayttajanimi, String salasana, int moderaattori) throws SQLException {
+        Connection connection = data.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Kayttaja (sahkoposti, kayttajanimi, salasana, moderaattori) VALUES(?, ?, ?, ?);");
+        stmt.setString(1,sahkoposti );
+        stmt.setString(2, kayttajanimi);
+        stmt.setString(3, salasana);
+        stmt.setInt(4, moderaattori);
+        stmt.executeUpdate();
+        
+        stmt.close();
+        connection.close();
     }
     
 }

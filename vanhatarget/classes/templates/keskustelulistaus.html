@@ -1,10 +1,10 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Otsikko</title>
-        <meta charset="utf-8" />
-        <style>
-
+         <title>Otsikko</title>
+         <meta charset="utf-8" />
+         <style>
+             
             table, th, td{
                 border: 1px solid dodgerblue;
                 border-collapse: collapse;
@@ -24,13 +24,13 @@
                 font-style: normal;
                 color: orange;
                 text-align: center;
-
+                
             }
-
+            
             input{
                 border-radius: 5px    
             }
-
+            
             /* unvisited link */
             a:link {
                 color: black;
@@ -52,52 +52,44 @@
             }
         </style>
     </head>
-
-    <body>
-        <a th:href="${'/uHup/kayttajaId'}" style="color: blue; background-color: orange" type="submit">Takaisin</a> 
-        <br></br> 
-
-        <h2 style="font-family:Copperplate Gothic Bold; text-align: left">Otsikko</h2>
-        <br></br>
-
-        <h1 style="font-family:Permanent Marker; text-align: left">ALUE</h1>
-
-
-        <table style="width:100%">
+    
+     <body>
+        <button style="color: blue; background-color: orange" type="submit">Takaisin</button> 
+    <br></br> 
+    
+    <h2 style="font-family:Copperplate Gothic Bold; text-align: left">Otsikko</h2>
+    <br></br>
+    
+    <h1 style="font-family:Permanent Marker; text-align: left">ALUE</h1>
+    
+    
+    <table style="width:100%">
             <tr>
-                <th>ID</th>
                 <th>Keskustelut </th>
                 <th>Viestejä yhteensä </th>
                 <th>Viimeisin viesti </th>
             </tr>
 
-            <tr th:each="keskustelu: ${keskustelut}">
-                <td>
-                    <span th:text="${keskustelu.id}">1</span>
-                </td>
-                <td>
-                    <a th:href="${'/uHup/kayttajaId/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" th:text="${keskustelu.otsikko}">1</a>
-                </td>
-                <td>
-                    <span th:text="${keskustelu.Viestimaara}">1</span>
-                </td>
-                <td>
-                    <span th:text="${keskustelu.viimeisinViesti}">esimerkki</span>
-                </td>
+            <tr>
+                <td>Kevätretki</td>
+                <td>7</td>
+                <td>01.03.95  12:30</td> 
             </tr>
-
+            <tr>
+                <td>Saunailta 16.7.</td>
+                <td>7</td>
+                <td>01.03.95  12:30</td> 
+            </tr>
         </table>
-        
-        <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
-
-        <form th:action="${'/uHup/kayttajaId/alue/' + alue.id}" method="POST">
+    
+        <form action="/vahvero" method="POST">
             <h4>Aloita uusi keskustelu:</h4>
             <input  type="text" name="otsikko"/>  
             <br></br>
             <button style="color: blue; background-color: orange" type="submit">LISÄÄ</button>
         </form>
-
+    
     </body>
-
-
+    
+    
 </html>

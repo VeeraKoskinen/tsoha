@@ -10,14 +10,14 @@ public class Kayttaja {
     private String kayttajanimi;
     private String salasana;
     private String sahkoposti;
-    private Boolean moderaattori;
+    private int moderaattori;
     
     public Kayttaja() {
         
     }
     
     public Kayttaja(int id, String kayttajanimi, String salasana, String sPosti) {
-        this.moderaattori = false;
+        this.moderaattori = 0;
         this.id = id;
         this.kayttajanimi = kayttajanimi;
         this.sahkoposti = sPosti;
@@ -64,12 +64,12 @@ public class Kayttaja {
         this.sahkoposti = sahkoposti;
     }
     
-    public Boolean getModeraattori() {
+    public Integer getModeraattori() {
         return moderaattori;
     }
     
-    public void setModeraattori(Boolean oikeus) {
-        moderaattori = oikeus;
+    public void setModeraattori(int oikeus) {
+        this.moderaattori = oikeus;
     }
     
 }

@@ -24,7 +24,7 @@ public class Main {
         }
         
          // käytetään oletuksena paikallista sqlite-tietokantaa
-        String jdbcOsoite = "jdbc:sqlite:keskustelupalsta.db";
+        String jdbcOsoite = "jdbc:sqlite:taulut.db";
         // jos heroku antaa käyttöömme tietokantaosoitteen, otetaan se käyttöön
         if (System.getenv("DATABASE_URL") != null) {
             jdbcOsoite = System.getenv("DATABASE_URL");
@@ -33,39 +33,76 @@ public class Main {
         Database database = new Database(jdbcOsoite);
         database.setDebugMode(true);
         
+        
         AlueDao alueDao = new AlueDao(database);
         KayttajaDao kayttajaDao = new KayttajaDao(database);
         KeskusteluDao keskusteluDao = new KeskusteluDao(database, alueDao);
         ViestiDao viestiDao = new ViestiDao(database, keskusteluDao, kayttajaDao);
         
+        Tarkastaja t = new Tarkastaja(database, kayttajaDao);
         
         //aloitussivu
-        get("/tatti", (req, res) -> {
+        get("/uHup", (req, res) -> {
             HashMap map = new HashMap<>(); 
+            
             return new ModelAndView(map, "aloitussivu");
         }, new ThymeleafTemplateEngine());
-        post("/kanttarelli", (req, res) -> { 
-            res.redirect("/kanttarelli");
+        post("/uHup", (req, res) -> { 
+            if (t.rightToJoin(req.queryParams("kayttajanimi"), req.queryParams("salasana"))) {
+                res.redirect("/uHup/kayttajaId");
+            }
+                res.redirect("/uHup");
             return "Kirjautuminen onnistui!";
         });
         
         
-        //omaProfiili (aluelistaus, henkilot)
-        get("/kanttarelli", (req, res) -> {
+        //aluelistaus
+        get("/uHup/kayttajaId", (req, res) -> {
             HashMap map = new HashMap<>(); 
+            map.put("alueet", alueDao.findAll());
             return new ModelAndView(map, "aluelistaus");
         }, new ThymeleafTemplateEngine());
+        post("/uHup/kayttajaId", (req, res) -> { 
+            alueDao.addNew(req.queryParams("Otsikko"));
+            res.redirect("/uHup/kayttajaId");
+            return "Lisäys onnistui!";
+        });
+        
         
         //keskustelulistaus
-        get("/vahvero", (req, res) -> {
-            HashMap map = new HashMap<>(); 
+        get("/uHup/kayttajaId/alue/:id", (req, res) -> {
+            int id = Integer.parseInt(req.params(":id"));
+            HashMap map = new HashMap<>();
+            map.put("alue", alueDao.findOne(id));
+            map.put("keskustelut", keskusteluDao.findAllTenFirst(id));   
             return new ModelAndView(map, "keskustelulistaus");
         }, new ThymeleafTemplateEngine());
+        post("/uHup/kayttajaId/alue/:id", (req, res) -> {
+            int id = Integer.parseInt(req.params(":id"));
+            keskusteluDao.addNew(req.queryParams("otsikko"), id);
+            res.redirect("/uHup/kayttajaId/alue/" + id);
+            return "Lisäys onnistui!";
+        });
         
         //viestilistaus
+        get("/kaapa", (req, res) -> {
+            HashMap map = new HashMap<>(); 
+            return new ModelAndView(map, "viestilistaus");
+        }, new ThymeleafTemplateEngine());
+        post("/kaapa", (req, res) -> { 
+            res.redirect("/kaapa");
+            return "Lähetys onnistui!";
+        });
         
-        // yksityinen keskustelu ??
-        
+        // hallintasivu
+         get("/pahka", (req, res) -> {
+            HashMap map = new HashMap<>(); 
+            return new ModelAndView(map, "hallintasivu");
+        }, new ThymeleafTemplateEngine());
+        post("/pahka", (req, res) -> { 
+            res.redirect("/pahka");
+            return "Lähetys onnistui!";
+        });
         
     }    
     
