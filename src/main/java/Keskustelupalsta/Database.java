@@ -69,6 +69,15 @@ public class Database <T> {
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
         
+        lista.add("CREATE TABLE Kayttaja (id integer PRIMARY KEY, sahkoposti string UNIQUE, kayttajanimi string UNIQUE, salasana string NOT NULL, moderaattori integer)");
+        lista.add("CREATE TABLE Alue (id integer PRIMARY KEY, otsikko varchar(100) NOT NULL);");
+        lista.add("CREATE TABLE Keskustelu (id integer PRIMARY KEY, otsikko varchar(1000) NOT NULL, alue integer NOT NULL, FOREIGN KEY (alue) REFERENCES Alue(id));");
+        lista.add("CREATE TABLE Viesti (id integer PRIMARY KEY, keskustelu integer NOT NULL, kayttaja integer NOT NULL, aika DATETIME DEFAULT(STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW')), viesti text NOT NULL, FOREIGN KEY (kayttaja) REFERENCES Kayttaja(id), FOREIGN KEY (keskustelu) REFERENCES Keskustelu(id));");
+        
+        
+        lista.add("INSERT INTO Kayttaja (sahkoposti, kayttajanimi, salasana, moderaattori) VALUES ('mikko.supermallikas@kuukkeli.com', 'MikkoMallikas', 'mi84as', 1);");
+        lista.add("INSERT INTO Kayttaja (sahkoposti, kayttajanimi, salasana, moderaattori) VALUES ('sanni.supermallikas@kuukkeli.com', 'SanniMallikas', 'sa91as', 0);");
+        
         return lista;
     }   
     
