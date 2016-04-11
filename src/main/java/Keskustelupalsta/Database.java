@@ -54,7 +54,7 @@ public class Database <T> {
         lista.add("DROP TABLE IF EXISTS Alue;");
         lista.add("DROP TABLE IF EXISTS Kayttaja;");
         // heroku käyttää SERIAL-avainsanaa uuden tunnuksen automaattiseen luomiseen
-        lista.add("CREATE TABLE Kayttaja (id serial PRIMARY KEY, sahkoposti string UNIQUE, kayttajanimi string UNIQUE, salasana string NOT NULL, moderaattori integer)");
+        lista.add("CREATE TABLE Kayttaja (id serial PRIMARY KEY, sahkoposti VARCHAR(100) UNIQUE, kayttajanimi VARCHAR(100) UNIQUE, salasana VARCHAR(100) NOT NULL, moderaattori integer)");
         lista.add("CREATE TABLE Alue (id serial PRIMARY KEY, otsikko varchar(100) NOT NULL);");
         lista.add("CREATE TABLE Keskustelu (id serial PRIMARY KEY, otsikko varchar(1000) NOT NULL, alue integer NOT NULL, FOREIGN KEY (alue) REFERENCES Alue(id));");
         lista.add("CREATE TABLE Viesti (id serial PRIMARY KEY, keskustelu integer NOT NULL, kayttaja integer NOT NULL, aika TIMESTAMP DEFAULT NOW(), viesti text NOT NULL, FOREIGN KEY (kayttaja) REFERENCES Kayttaja(id), FOREIGN KEY (keskustelu) REFERENCES Keskustelu(id));");
@@ -69,7 +69,7 @@ public class Database <T> {
 
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
         
-        lista.add("CREATE TABLE Kayttaja (id integer PRIMARY KEY, sahkoposti string UNIQUE, kayttajanimi string UNIQUE, salasana string NOT NULL, moderaattori integer)");
+        lista.add("CREATE TABLE Kayttaja (id integer PRIMARY KEY, sahkoposti VARCHAR(100) UNIQUE, kayttajanimi VARCHAR(100) UNIQUE, salasana VARCHAR(100) NOT NULL, moderaattori integer)");
         lista.add("CREATE TABLE Alue (id integer PRIMARY KEY, otsikko varchar(100) NOT NULL);");
         lista.add("CREATE TABLE Keskustelu (id integer PRIMARY KEY, otsikko varchar(1000) NOT NULL, alue integer NOT NULL, FOREIGN KEY (alue) REFERENCES Alue(id));");
         lista.add("CREATE TABLE Viesti (id integer PRIMARY KEY, keskustelu integer NOT NULL, kayttaja integer NOT NULL, aika DATETIME DEFAULT(STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW')), viesti text NOT NULL, FOREIGN KEY (kayttaja) REFERENCES Kayttaja(id), FOREIGN KEY (keskustelu) REFERENCES Keskustelu(id));");
