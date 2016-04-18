@@ -63,7 +63,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
     public ArrayList findAll(int keskustelu) throws SQLException {
 
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Alue a, Keskustelu k, Viesti v WHERE a.id = k.alue AND k.id = v.keskustelu AND v.keskustelu = ? ORDER BY id;");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Alue a, Keskustelu k, Viesti v WHERE a.id = k.alue AND k.id = v.keskustelu AND v.keskustelu = ? ORDER BY v.aika;");
             stmt.setInt(1, keskustelu);
             ResultSet rs = stmt.executeQuery();
 
