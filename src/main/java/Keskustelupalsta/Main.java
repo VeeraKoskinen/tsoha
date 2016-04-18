@@ -114,7 +114,7 @@ public class Main {
             int id1 = Integer.parseInt(req.params(":kayttajaid"));
             int id2 = Integer.parseInt(req.params(":alueid"));
             int id3 = Integer.parseInt(req.params(":id"));
-            viestiDao.addNew(req.queryParams("viesti"), id1, id2);
+            viestiDao.addNew(req.queryParams("viesti"), id1, id3);
             res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id2 + "/keskustelu/" + id3);
             return "Lähetys onnistui!";
         });

@@ -128,7 +128,6 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         stmt.setInt(2, kayttaja);
         stmt.setInt(3, keskustelu);
         stmt.executeUpdate();
-
         stmt.close();
         connection.close();
     }
