@@ -73,7 +73,7 @@ public class Main {
             return new ModelAndView(map, "aluelistaus");
         }, new ThymeleafTemplateEngine());
         post("/uHup/kayttaja/:id", (req, res) -> { 
-            int id = Integer.parseInt(":id");
+            int id = Integer.parseInt(req.params(":id"));
             alueDao.addNew(req.queryParams("Otsikko"));
             res.redirect("/uHup/kayttaja/" + id);
             return "Lisäys onnistui!";
@@ -91,7 +91,7 @@ public class Main {
             return new ModelAndView(map, "keskustelulistaus");
         }, new ThymeleafTemplateEngine());
         post("/uHup/kayttaja/:kayttajaid/alue/:id", (req, res) -> {
-            int id1 = Integer.parseInt(":kayttajaid");
+            int id1 = Integer.parseInt(req.params(":kayttajaid"));
             int id = Integer.parseInt(req.params(":id"));
             keskusteluDao.addNew(req.queryParams("otsikko"), id);
             res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id);
@@ -114,18 +114,19 @@ public class Main {
             int id1 = Integer.parseInt(req.params(":kayttajaid"));
             int id2 = Integer.parseInt(req.params(":alueid"));
             int id3 = Integer.parseInt(req.params(":id"));
-            viestiDao.addNew(req.params("viesti"), id1, id2);
+            viestiDao.addNew(req.queryParams("viesti"), id1, id2);
             res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id2 + "/keskustelu/" + id3);
             return "Lähetys onnistui!";
         });
         
         // hallintasivu
-         get("/pahka", (req, res) -> {
+         get("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> {
             HashMap map = new HashMap<>(); 
             return new ModelAndView(map, "hallintasivu");
         }, new ThymeleafTemplateEngine());
-        post("/pahka", (req, res) -> { 
-            res.redirect("/pahka");
+        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> { 
+            int id = Integer.parseInt(":kayttajaid");
+            res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";
         });
         

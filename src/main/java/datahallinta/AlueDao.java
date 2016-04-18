@@ -58,7 +58,7 @@ public class AlueDao implements Dao<Alue, Integer> {
 
     public ArrayList findAll(int offset) throws SQLException {
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT a.id AS ID, a.otsikko AS Otsikko, COUNT(v.id) AS Maara, MAX(v.aika) AS Päivä FROM Alue a LEFT JOIN Keskustelu k  ON a.id = k.alue LEFT JOIN Viesti v ON k.id=v.keskustelu GROUP BY a.id ORDER BY Päivä DESC LIMIT 10 OFFSET ?;");
+            PreparedStatement stmt = connection.prepareStatement("SELECT a.id AS ID, a.otsikko AS Otsikko, COUNT(v.id) AS Maara, MAX(v.aika) AS Paiva FROM Alue a LEFT JOIN Keskustelu k  ON a.id = k.alue LEFT JOIN Viesti v ON k.id=v.keskustelu GROUP BY a.id ORDER BY Paiva DESC LIMIT 10 OFFSET ?;");
             stmt.setInt(1, offset * 10);
             
             ResultSet rs = stmt.executeQuery();
@@ -75,7 +75,7 @@ public class AlueDao implements Dao<Alue, Integer> {
 
                 alueet.add(ka);
                 Integer maara = rs.getInt("Maara");
-                java.sql.Date paiva = rs.getDate("Päivä");
+                java.sql.Date paiva = rs.getDate("Paiva");
 
                 ka.setViestimaara(maara);
                 ka.setViimeisinViesti(paiva);

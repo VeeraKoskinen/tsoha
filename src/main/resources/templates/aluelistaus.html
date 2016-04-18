@@ -89,7 +89,7 @@
     
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
     
-        <form action="'/uHup/kayttaja/' + kayttaja.id" method="POST">
+        <form th:action="${'/uHup/kayttaja/' + kayttaja.id}" method="POST">
             <h4>Lisää uusi aihe:</h4>
             <input  type="text" name="Otsikko"/>  
             <br></br>

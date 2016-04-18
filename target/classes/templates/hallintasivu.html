@@ -78,7 +78,7 @@
             <div style="width:33%;float:left">
                 <h3> Lisää uusi käyttäjä:</h3>
 
-                <form th:action="${'/pahka'}" method="POST">
+                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt'}" method="POST">
                     <h5>Sähköposti:</h5>
                     <input type="text" name="Sahkoposti:" placeholder="matti.meikalainen@mm.com"/>
                     <br></br>
@@ -102,7 +102,10 @@
                 <button style="background: greenyellow; color: blue" type="submit">Etsi</button>
                 <br></br>
                 <h4>Käyttäjän tiedot:</h4>
-                <h6>Sähköposti: matti.meikalainen@mm.com <br></br> Käyttäjänimi: MattiMeikalainen <br></br> Salasana: Ma13Me <br></br> Moderaattori: kyllä <br></br> ID: 1 </h6>
+                <ul>
+                    <li class="reunustettu" th:each="viesti: ${kayttajat}" th:text="${kayttaja.toString}">
+                    </li>
+                </ul>
                 <br></br>
                 <h3>Poista käyttäjä:</h3>
                 <form>
