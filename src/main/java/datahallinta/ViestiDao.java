@@ -114,8 +114,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM Viesti WHERE id = ?;");
             stmt.setObject(1, key);
             stmt.executeUpdate();
-            stmt.executeUpdate();
-
+           
             stmt.close();
             connection.close();
         }
