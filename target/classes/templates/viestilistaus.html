@@ -77,24 +77,19 @@
 
         <h1 th:text="${keskustelu.otsikko}"></h1>
 
-        <div>
-            <div style="width:20%;float:left">
-                
-            </div>
-            <div style="width:60%;float:left">    
-                <ul>
-                    <li class="reunustettu" th:each="viesti: ${viestit}" th:text="${viesti.viesti}">
-                    </li>
-                </ul>
 
-                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
-                    <textarea name="viesti" rows="10" cols="50" placeholder="kirjoita viestisi tähän"></textarea>
-                    <br></br>
-                    <button style="color: blue; background-color: orange" type="submit">Lähetä</button>
-                </form>
 
-            </div>
-        </div>    
+        <ul>
+            <li class="reunustettu" th:each="viesti: ${viestit}" th:text="${viesti.viesti}">
+            </li>
+        </ul>
+
+        <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
+            <textarea name="viesti" rows="10" cols="50" placeholder="kirjoita viestisi tähän"></textarea>
+            <br></br>
+            <button style="color: blue; background-color: orange" type="submit">Lähetä</button>
+        </form>
+
 
 
     </body>    

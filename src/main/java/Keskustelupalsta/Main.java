@@ -68,6 +68,9 @@ public class Main {
         get("/uHup/kayttaja/:id", (req, res) -> {
             int id = Integer.parseInt(req.params(":id"));
             HashMap map = new HashMap<>();
+            if (t.moderaattori(id)) {
+                map.put("moderaattori", kayttajaDao.findOne(id));
+            }
             map.put("kayttaja", kayttajaDao.findOne(id));
             map.put("alueet", alueDao.findAll());
             return new ModelAndView(map, "aluelistaus");
@@ -119,13 +122,25 @@ public class Main {
             return "Lähetys onnistui!";
         });
         
+        
         // hallintasivu
          get("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> {
+             int id = Integer.parseInt(req.params(":kayttajaid"));
             HashMap map = new HashMap<>(); 
+            map.put("kayttaja", kayttajaDao.findOne(id));
             return new ModelAndView(map, "hallintasivu");
         }, new ThymeleafTemplateEngine());
         post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> { 
             int id = Integer.parseInt(":kayttajaid");
+            
+            kayttajaDao.addNew(req.queryParams("sahkoposti"), req.queryParams("kayttajanimi"), req.queryParams("salasana"), Integer.parseInt(req.queryParams("moderaattori")));
+            
+            kayttajaDao.delete(Integer.parseInt(req.queryParams("kayttajanpoisto")));
+            
+            alueDao.delete(Integer.parseInt(req.queryParams("alueenpoisto")));
+            
+            
+            
             res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";
         });
