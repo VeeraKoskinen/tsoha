@@ -5,6 +5,11 @@
  */
 package Keskustelupalsta;
 
+import datahallinta.Database;
+import datahallinta.ViestiDao;
+import datahallinta.KeskusteluDao;
+import datahallinta.KayttajaDao;
+import datahallinta.AlueDao;
 import static spark.Spark.*;
 import java.util.*;
 import spark.ModelAndView;
@@ -49,48 +54,68 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         post("/uHup", (req, res) -> { 
             if (t.rightToJoin(req.queryParams("kayttajanimi"), req.queryParams("salasana"))) {
-                res.redirect("/uHup/kayttajaId");
+                String nimi = req.queryParams("kayttajanimi");
+                int id = kayttajaDao.findOneWithUsername(nimi).getId();
+                res.redirect("/uHup/kayttaja/" + id);
+                return "Kirjautuminen onnistui!";
             }
                 res.redirect("/uHup");
-            return "Kirjautuminen onnistui!";
+            return "Kirjautuminen epäonnistui!";
         });
         
         
         //aluelistaus
-        get("/uHup/kayttajaId", (req, res) -> {
-            HashMap map = new HashMap<>(); 
+        get("/uHup/kayttaja/:id", (req, res) -> {
+            int id = Integer.parseInt(req.params(":id"));
+            HashMap map = new HashMap<>();
+            map.put("kayttaja", kayttajaDao.findOne(id));
             map.put("alueet", alueDao.findAll());
             return new ModelAndView(map, "aluelistaus");
         }, new ThymeleafTemplateEngine());
-        post("/uHup/kayttajaId", (req, res) -> { 
+        post("/uHup/kayttaja/:id", (req, res) -> { 
+            int id = Integer.parseInt(":id");
             alueDao.addNew(req.queryParams("Otsikko"));
-            res.redirect("/uHup/kayttajaId");
+            res.redirect("/uHup/kayttaja/" + id);
             return "Lisäys onnistui!";
         });
         
         
         //keskustelulistaus
-        get("/uHup/kayttajaId/alue/:id", (req, res) -> {
-            int id = Integer.parseInt(req.params(":id"));
+        get("/uHup/kayttaja/:kayttajaid/alue/:id", (req, res) -> {
+            int id1 = Integer.parseInt(req.params(":kayttajaid"));
+            int id2 = Integer.parseInt(req.params(":id"));
             HashMap map = new HashMap<>();
-            map.put("alue", alueDao.findOne(id));
-            map.put("keskustelut", keskusteluDao.findAllTenFirst(id));   
+            map.put("kayttaja", kayttajaDao.findOne(id1));
+            map.put("alue", alueDao.findOne(id2));
+            map.put("keskustelut", keskusteluDao.findAllTenFirst(id2));   
             return new ModelAndView(map, "keskustelulistaus");
         }, new ThymeleafTemplateEngine());
-        post("/uHup/kayttajaId/alue/:id", (req, res) -> {
+        post("/uHup/kayttaja/:kayttajaid/alue/:id", (req, res) -> {
+            int id1 = Integer.parseInt(":kayttajaid");
             int id = Integer.parseInt(req.params(":id"));
             keskusteluDao.addNew(req.queryParams("otsikko"), id);
-            res.redirect("/uHup/kayttajaId/alue/" + id);
+            res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id);
             return "Lisäys onnistui!";
         });
         
         //viestilistaus
-        get("/kaapa", (req, res) -> {
+        get("/uHup/kayttaja/:kayttajaid/alue/:alueid/keskustelu/:id", (req, res) -> {
+            int id1 = Integer.parseInt(req.params(":kayttajaid"));
+            int id2 = Integer.parseInt(req.params(":alueid"));
+            int id3 = Integer.parseInt(req.params(":id"));
             HashMap map = new HashMap<>(); 
+            map.put("kayttaja", kayttajaDao.findOne(id1));
+            map.put("alue", alueDao.findOne(id2));
+            map.put("keskustelu", keskusteluDao.findOne(id3));
+            map.put("viestit", viestiDao.findAll(id3));
             return new ModelAndView(map, "viestilistaus");
         }, new ThymeleafTemplateEngine());
-        post("/kaapa", (req, res) -> { 
-            res.redirect("/kaapa");
+        post("/uHup/kayttaja/:kayttajaid/alue/:alueid/keskustelu/:id", (req, res) -> {
+            int id1 = Integer.parseInt(req.params(":kayttajaid"));
+            int id2 = Integer.parseInt(req.params(":alueid"));
+            int id3 = Integer.parseInt(req.params(":id"));
+            viestiDao.addNew(req.params("viesti"), id1, id2);
+            res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id2 + "/keskustelu/" + id3);
             return "Lähetys onnistui!";
         });
         

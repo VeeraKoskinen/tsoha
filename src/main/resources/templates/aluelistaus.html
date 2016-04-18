@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-         <title>Otsikko</title>
+         <title>uHup</title>
          <meta charset="utf-8" />
          <style>
              
@@ -58,7 +58,7 @@
     <br></br> 
     
     
-    <h1 style="font-family:Copperplate Gothic Bold; text-align: left">Otsikko</h1>
+    <h1 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h1>
     <br></br>
     
     
@@ -71,12 +71,12 @@
                 <th>Viimeisin viesti </th>
             </tr>
 
-            <tr th:each="alue: ${alueet}">
+            <tr th:each="alue: ${alueet}" >
                 <td>
                     <a th:text="${alue.id}" style="color: blue">1</a>
                 </td>    
                 <td>
-                    <a th:href="${'/uHup/kayttajaId/alue/' + alue.id}" th:text="${alue.otsikko}">1</a> 
+                    <a th:href="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id}" th:text="${alue.otsikko}">1</a> 
                 </td>
                 <td>
                     <span th:text="${alue.Viestimaara}">1</span>
@@ -89,7 +89,7 @@
     
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
     
-        <form action="/uHup/kayttajaId" method="POST">
+        <form action="'/uHup/kayttaja/' + kayttaja.id" method="POST">
             <h4>Lisää uusi aihe:</h4>
             <input  type="text" name="Otsikko"/>  
             <br></br>

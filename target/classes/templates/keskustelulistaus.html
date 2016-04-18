@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Otsikko</title>
+        <title>uHup</title>
         <meta charset="utf-8" />
         <style>
 
@@ -57,10 +57,10 @@
         <a th:href="${'/uHup/kayttajaId'}" style="color: blue; background-color: orange" type="submit">Takaisin</a> 
         <br></br> 
 
-        <h2 style="font-family:Copperplate Gothic Bold; text-align: left">Otsikko</h2>
+        <h2 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h2>
         <br></br>
 
-        <h1 style="font-family:Permanent Marker; text-align: left">ALUE</h1>
+        <h1 style="font-family:Permanent Marker; text-align: left" th:text="${alue.otsikko}" ></h1>
 
 
         <table style="width:100%">
@@ -76,10 +76,10 @@
                     <span th:text="${keskustelu.id}">1</span>
                 </td>
                 <td>
-                    <a th:href="${'/uHup/kayttajaId/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" th:text="${keskustelu.otsikko}">1</a>
+                    <a th:href="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" th:text="${keskustelu.otsikko}">1</a>
                 </td>
                 <td>
-                    <span th:text="${keskustelu.Viestimaara}">1</span>
+                    <span th:text="${keskustelu.viestimaara}">1</span>
                 </td>
                 <td>
                     <span th:text="${keskustelu.viimeisinViesti}">esimerkki</span>
@@ -90,7 +90,7 @@
         
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
-        <form th:action="${'/uHup/kayttajaId/alue/' + alue.id}" method="POST">
+        <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id}" method="POST">
             <h4>Aloita uusi keskustelu:</h4>
             <input  type="text" name="otsikko"/>  
             <br></br>

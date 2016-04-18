@@ -6,6 +6,9 @@
 package Keskustelupalsta;
 
 
+import datahallinta.Database;
+import datahallinta.KayttajaDao;
+import tauluoliot.Kayttaja;
 import java.util.*;
 import java.sql.*;
 /**
