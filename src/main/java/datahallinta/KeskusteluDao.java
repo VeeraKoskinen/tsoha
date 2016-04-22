@@ -159,15 +159,19 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
            try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Keskustelu WHERE id = ?;");
-            stmt.setObject(1, key);
-            stmt.executeUpdate();
+            PreparedStatement stmt1 = connection.prepareStatement("DELETE FROM Viesti WHERE keskustelu = ?;");
+            stmt1.setObject(1, key);
+            stmt1.executeUpdate();
+            PreparedStatement stmt2 = connection.prepareStatement("DELETE FROM Keskustelu WHERE id = ?;");
+            stmt2.setObject(1, key);
+            stmt2.executeUpdate();
         }    
     }
     
     public void addNew(String otsikko, int alue) throws SQLException {
         Connection connection = data.getConnection();
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (otsikko, alue) VALUES(?, ?);");
+        
         stmt.setString(1, otsikko);
         stmt.setInt(2, alue);
         

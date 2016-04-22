@@ -134,6 +134,9 @@ public class KayttajaDao implements Dao<Kayttaja, Integer>{
     @Override
     public void delete(Integer key) throws SQLException {
          try (Connection connection = data.getConnection()) {
+            PreparedStatement stmt1 = connection.prepareStatement("DELETE FROM Viesti WHERE kayttaja = ?;");
+            stmt1.setObject(1, key);
+            stmt1.executeUpdate(); 
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM Kayttaja WHERE id = ?;");
             stmt.setObject(1, key);
             stmt.executeUpdate();

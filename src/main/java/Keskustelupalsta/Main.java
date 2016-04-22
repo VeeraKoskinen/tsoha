@@ -132,31 +132,31 @@ public class Main {
             return new ModelAndView(map, "hallintasivu");
         }, new ThymeleafTemplateEngine());
         post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> { 
-            int id = Integer.parseInt(":kayttajaid"); 
+            int id = Integer.parseInt(req.params(":kayttajaid")); 
             kayttajaDao.addNew(req.queryParams("sahkoposti"), req.queryParams("kayttajanimi"), req.queryParams("salasana"), Integer.parseInt(req.queryParams("moderaattori")));
             res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";
         });
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> { 
-            int id = Integer.parseInt(":kayttajaid");
+        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt/poistakayttaja", (req, res) -> { 
+            int id = Integer.parseInt(req.params(":kayttajaid"));
             kayttajaDao.delete(Integer.parseInt(req.queryParams("kayttajanpoisto")));
             res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";
         });
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> { 
-            int id = Integer.parseInt(":kayttajaid");
+        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt/poistaalue", (req, res) -> { 
+            int id = Integer.parseInt(req.params(":kayttajaid"));
             alueDao.delete(Integer.parseInt(req.queryParams("alueenpoisto")));
             res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";
         });
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> { 
-            int id = Integer.parseInt(":kayttajaid");
+        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt/poistakeskustelu", (req, res) -> { 
+            int id = Integer.parseInt(req.params(":kayttajaid"));
             keskusteluDao.delete(Integer.parseInt(req.queryParams("keskustelunpoisto")));
             res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";
         });
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> { 
-            int id = Integer.parseInt(":kayttajaid");
+        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt/poistaviesti", (req, res) -> { 
+            int id = Integer.parseInt(req.params(":kayttajaid"));
             viestiDao.delete(Integer.parseInt(req.queryParams("viestinpoisto")));
             res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";

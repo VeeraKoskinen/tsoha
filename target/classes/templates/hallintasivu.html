@@ -107,7 +107,7 @@
                 </ul>
                 <br></br>
                 <h3>Poista käyttäjä:</h3>
-                <form>
+                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/poistakayttaja'}" method="POST">
                     <input type="text" name="kayttajanpoisto" placeholder="nro"/>
                     <button style="background: greenyellow; color: blue" type="submit">Poista</button>
                 </form>
@@ -115,21 +115,21 @@
 
             <div style="width:33%;float:left">
                 <h3 style="text-align: center">Poista alue:</h3>
-                <form style="text-align: center">
+                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/poistaalue'}" method="POST" style="text-align: center">
                     <input type="text" name="alueenpoisto" placeholder="id"/>
                     <br></br>
                     <button style="background: greenyellow; color: blue" type="submit">Poista</button>
                 </form>
                 <br></br>
                 <h3 style="text-align: center">Poista keskustelu:</h3>
-                <form style="text-align: center">
+                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/poistakeskustelu'}" method="POST" style="text-align: center">
                     <input type="text" name="keskustelunpoisto" placeholder="id"/>
                     <br></br>
                     <button style="background: greenyellow; color: blue" type="submit">Poista</button>
                 </form>
                 <br></br>
                 <h3 style="text-align: center">Poista viesti:</h3>
-                <form style="text-align: center">
+                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/poistaviesti'}" method="POST" style="text-align: center">
                     <input type="text" name="viestinpoisto" placeholder="id"/>
                     <br></br>
                     <button style="background: greenyellow; color: blue" type="submit">Poista</button>
