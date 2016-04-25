@@ -92,6 +92,7 @@ public class Main {
             if (t.moderaattori(id1)) {
                 map.put("moderaattori", kayttajaDao.findOne(id1));
             }
+            map.put("uloskirjaaja", kayttajaDao.findOne(id1));
             map.put("kayttaja", kayttajaDao.findOne(id1));
             map.put("alue", alueDao.findOne(id2));
             map.put("keskustelut", keskusteluDao.findAllTenFirst(id2));   
@@ -116,6 +117,7 @@ public class Main {
             } else {
                 
             }
+            map.put("uloskirjaaja", kayttajaDao.findOne(id1));
             map.put("kayttaja", kayttajaDao.findOne(id1));
             map.put("alue", alueDao.findOne(id2));
             map.put("keskustelu", keskusteluDao.findOne(id3));
