@@ -88,8 +88,8 @@
                     <h5>Salasana:</h5>
                     <input type="text" name="salasana" placeholder="Ma13Me"/>
                     <br></br>
-                        <h5>Moderaattori:</h5>
-                        <input type="text" name="moderaattori" placeholder="0 = ei oikeuksia tai 1 = oikeudet" />
+                    <h5>Moderaattori:</h5>
+                    <input type="text" name="moderaattori" placeholder="0 = ei oikeuksia tai 1 = oikeudet" />
                     <br></br>
                     <br></br>
                     <button style="background: greenyellow; color: blue" type="submit">Lisää Käyttäjä</button>
@@ -98,12 +98,14 @@
 
             <div style="width:33%;float:left">
                 <h3>Hae käyttäjää:</h3>
-                <input type="text" name="etsittävä" placeholder="MattiMeikäläinen"/>
-                <button style="background: greenyellow; color: blue" type="submit">Etsi</button>
-                <br></br>
+                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/etsihenkilo'}" method='GET'>
+                    <input type="text" name="etsihenkilo" placeholder="MikkoMallikas"/>
+                    <button style="background: greenyellow; color: blue" type="submit">Etsi</button>
+                    <br></br>
+                </form>
                 <h4>Käyttäjän tiedot:</h4>
                 <ul>
-                    <li class="reunustettu" th:text="${kayttaja}"></li>
+                    <li th:text="${kayttaja.toString}"></li>
                 </ul>
                 <br></br>
                 <h3>Poista käyttäjä:</h3>

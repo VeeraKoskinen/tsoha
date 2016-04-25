@@ -64,8 +64,9 @@
     </head>
 
     <body>
+        <a name="moderaattori" style="text-align: right"  th:href="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt'}">Siirry järjestelmänhallintaan</a>
 
-        <button style="color: blue; background-color: orange" type="submit">Takaisin</button>    
+           
         <br></br> 
 
 
@@ -75,16 +76,29 @@
 
         <h4 style="font-family:Copperplate Gothic Bold; text-align: left" th:text="${alue.otsikko}"></h4>
 
-        <h1 th:text="${keskustelu.otsikko}"></h1>
+        <h1 style="width:50%" th:text="${keskustelu.otsikko}"></h1>
 
 
+        <table  style="width:100%">
+            <tr>               
+                <th style="width:50%;"></th>
+                <th style="width:30%; text-align: right">Lähettäjä</th>
+                <th style="width:20%; text-align: left"></th> 
+            </tr>
+            <tr class="reunustettu" th:each="viesti: ${viestit}">
+                <td th:text="${viesti.viesti}">viesti</td>
+                <td th:text="${kayttaja.kayttajanimi}" style="text-align: right">nimi</td>
+                <td>
+                    <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id/poisto}" method="POST" style="text-align: center">
+                        <input type="hidden" name="poisto" th:value="${viesti.id}"></input>
+                        <button style="background: orange; color: blue" type="submit">Poista</button>
+                    </form>
+                </td>
+            </tr>    
+        </table>    
+        
 
-        <ul>
-            <li class="reunustettu" th:each="viesti: ${viestit}" th:text="${viesti.viesti}">
-            </li>
-        </ul>
-
-        <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
+        <form style="width:50%" th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
             <textarea name="viesti" rows="10" cols="50" placeholder="kirjoita viestisi tähän"></textarea>
             <br></br>
             <button style="color: blue; background-color: orange" type="submit">Lähetä</button>

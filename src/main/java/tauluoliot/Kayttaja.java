@@ -72,7 +72,7 @@ public class Kayttaja {
         this.moderaattori = oikeus;
     }
     
-    public String toStirng() {
+    public String toString() {
         if (moderaattori == 1) {
         return "ID: " + id + "\n Kayttajanimi: " + kayttajanimi + "\n Salasana: " + salasana + "\n S-posti: " + sahkoposti + "Moderaattori: " + "KYLLÄ";
         }

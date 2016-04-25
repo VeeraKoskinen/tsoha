@@ -76,35 +76,35 @@ public class KayttajaDao implements Dao<Kayttaja, Integer>{
         }
     }
     
-    public String moderaattoriFindOne(String kayttajanimi) throws SQLException {
-        try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja WHERE kayttajanimi = ?;");
-            stmt.setObject(1, kayttajanimi);
-
-            ResultSet rs = stmt.executeQuery();
-            boolean hasOne = rs.next();
-            if (!hasOne) {
-                return null;
-            }
-
-            Integer id = rs.getInt("id");
-            String salasana = rs.getString("salasana");
-            String nimi = rs.getString("kayttajanimi");
-            String sahkoposti = rs.getString("sahkoposti");
-
-            Kayttaja k = new Kayttaja(id, nimi, salasana, sahkoposti);
-
-            rs.close();
-            stmt.close();
-            
-            if (k.getModeraattori() == 1) {
-                return "Kayttajanimi: " + k.getKayttajanimi() + "\n Salasana" + k.getSalasana() + "\n Sahkoposti: " + k.getSahkoposti() + "\n ID: " + k.getId() + "Moderaattori: KYLLÄ";
-            }
-
-            return "Kayttajanimi: " + k.getKayttajanimi() + "\n Salasana" + k.getSalasana() + "\n Sahkoposti: " + k.getSahkoposti() + "\n ID: " + k.getId() + "Moderaattori: EI";
-        }
-       
-    }
+//    public String moderaattoriFindOne(String kayttajanimi) throws SQLException {
+//        try (Connection connection = data.getConnection()) {
+//            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja WHERE kayttajanimi = ?;");
+//            stmt.setObject(1, kayttajanimi);
+//
+//            ResultSet rs = stmt.executeQuery();
+//            boolean hasOne = rs.next();
+//            if (!hasOne) {
+//                return null;
+//            }
+//
+//            Integer id = rs.getInt("id");
+//            String salasana = rs.getString("salasana");
+//            String nimi = rs.getString("kayttajanimi");
+//            String sahkoposti = rs.getString("sahkoposti");
+//
+//            Kayttaja k = new Kayttaja(id, nimi, salasana, sahkoposti);
+//
+//            rs.close();
+//            stmt.close();
+//            
+//            if (k.getModeraattori() == 1) {
+//                return "Kayttajanimi: " + k.getKayttajanimi() + "\n Salasana" + k.getSalasana() + "\n Sahkoposti: " + k.getSahkoposti() + "\n ID: " + k.getId() + "Moderaattori: KYLLÄ";
+//            }
+//
+//            return "Kayttajanimi: " + k.getKayttajanimi() + "\n Salasana" + k.getSalasana() + "\n Sahkoposti: " + k.getSahkoposti() + "\n ID: " + k.getId() + "Moderaattori: EI";
+//        }
+//       
+//    }
       
 
     
