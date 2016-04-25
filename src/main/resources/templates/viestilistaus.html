@@ -7,7 +7,7 @@
         <style>
 
             table, th, td{
-                border: 1px solid dodgerblue;
+                border: 1px solid orange;
                 border-collapse: collapse;
                 text-align: center;
             }
@@ -81,15 +81,15 @@
 
         <table  style="width:100%">
             <tr>               
-                <th style="width:50%;"></th>
-                <th style="width:30%; text-align: right">Lähettäjä</th>
+                <th style="width:50%; color: chocolate">Viestilista</th>
+                <th style="width:30%; text-align: center; color: chocolate">Lähettäjä</th>
                 <th style="width:20%; text-align: left"></th> 
             </tr>
             <tr class="reunustettu" th:each="viesti: ${viestit}">
                 <td th:text="${viesti.viesti}">viesti</td>
-                <td th:text="${kayttaja.kayttajanimi}" style="text-align: right">nimi</td>
+                <td th:text="${kayttaja.kayttajanimi}" style="text-align: center">nimi</td>
                 <td>
-                    <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id/poisto}" method="POST" style="text-align: center">
+                    <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id + '/poisto'}" method="POST" style="text-align: center">
                         <input type="hidden" name="poisto" th:value="${viesti.id}"></input>
                         <button style="background: orange; color: blue" type="submit">Poista</button>
                     </form>

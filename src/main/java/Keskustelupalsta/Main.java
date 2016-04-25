@@ -71,6 +71,7 @@ public class Main {
             if (t.moderaattori(id)) {
                 map.put("moderaattori", kayttajaDao.findOne(id));
             }
+            map.put("uloskirjaaja", kayttajaDao.findOne(id));
             map.put("kayttaja", kayttajaDao.findOne(id));
             map.put("alueet", alueDao.findAll());
             return new ModelAndView(map, "aluelistaus");
@@ -112,6 +113,8 @@ public class Main {
             HashMap map = new HashMap<>();
             if (t.moderaattori(id1)) {
                 map.put("moderaattori", kayttajaDao.findOne(id1));
+            } else {
+                
             }
             map.put("kayttaja", kayttajaDao.findOne(id1));
             map.put("alue", alueDao.findOne(id2));
@@ -133,7 +136,7 @@ public class Main {
             int id3 = Integer.parseInt(req.params(":id"));
             viestiDao.delete(Integer.parseInt(req.queryParams("poisto")));
             res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id2 + "/keskustelu/" + id3);
-            return "Lähetys onnistui!";
+            return "Poisto onnistui!";
         });
         
         
