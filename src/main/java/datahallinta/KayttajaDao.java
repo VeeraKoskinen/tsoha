@@ -43,6 +43,8 @@ public class KayttajaDao implements Dao<Kayttaja, Integer>{
             String sahkoposti = rs.getString("sahkoposti");
 
             Kayttaja k = new Kayttaja(id, kayttajanimi, salasana, sahkoposti);
+            int mod = rs.getInt("moderaattori");
+            k.setModeraattori(mod);
 
             rs.close();
             stmt.close();
@@ -68,6 +70,8 @@ public class KayttajaDao implements Dao<Kayttaja, Integer>{
             String sahkoposti = rs.getString("sahkoposti");
 
             Kayttaja k = new Kayttaja(id, kayttajanimi, salasana, sahkoposti);
+            int mod = rs.getInt("moderaattori");
+            k.setModeraattori(mod);
 
             rs.close();
             stmt.close();
@@ -119,8 +123,10 @@ public class KayttajaDao implements Dao<Kayttaja, Integer>{
                 String kayttajanimi = rs.getString("kayttajanimi");
                 String salasana = rs.getString("salasana");
                 String sahkoposti = rs.getString("sahkoposti");
-
-                kayttajat.add(new Kayttaja(id, kayttajanimi, salasana, sahkoposti));
+                Kayttaja k =new Kayttaja(id, kayttajanimi, salasana, sahkoposti);
+                int mod = rs.getInt("moderaattori");
+                k.setModeraattori(mod);
+                kayttajat.add(k);
             }
 
             rs.close();

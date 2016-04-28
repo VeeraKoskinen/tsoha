@@ -1,10 +1,10 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-         <title>uHup</title>
-         <meta charset="utf-8" />
-         <style>
-             
+        <title>uHup</title>
+        <meta charset="utf-8" />
+        <style>
+
             table, th, td{
                 border: 1px solid dodgerblue;
                 border-collapse: collapse;
@@ -24,13 +24,13 @@
                 font-style: normal;
                 color: orange;
                 text-align: center;
-                
+
             }
-            
+
             input{
                 border-radius: 5px    
             }
-            
+
             /* unvisited link */
             a:link {
                 color: orange;
@@ -52,34 +52,32 @@
             }
         </style>
     </head>
-    
-    
-     <body>
-         <a name="moderaattori" style="text-align: right"  th:href="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt'}">Siirry järjestelmänhallintaan</a>
-         <a name="uloskirjaaja" style="text-align: left"  th:href="${'/uHup'}">Kirjaudu ulos</a>
-           
-    <br></br> 
-    
-    
-    <h1 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h1>
-    <br></br>
-    
-    
-    
-    <table style="width:100%">
+
+
+    <body>
+        <a name="moderaattori" style="text-align: right"  th:href="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt'}">Siirry järjestelmänhallintaan</a>
+        <a name="uloskirjaaja" style="text-align: left"  th:href="${'/uHup'}">Kirjaudu ulos</a>
+
+        <br></br> 
+
+
+        <h1 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h1>
+        <br></br>
+
+
+
+        <table style="width:100%">
             <tr>
-                <th style="color: blue">ID</th>
-                <th>Alueet </th>
-                <th>Viestejä yhteensä </th>
-                <th>Viimeisin viesti </th>
+
+                <th style="width:30%">Alueet </th>
+                <th style="width:30%">Viestejä yhteensä </th>
+                <th style="width:30%">Viimeisin viesti </th>
+                <th style="width:10%"></th>
             </tr>
 
-            <tr th:each="alue: ${alueet}" >
+            <tr th:each="alue: ${alueet}" >   
                 <td>
-                    <a th:text="${alue.id}" style="color: blue">1</a>
-                </td>    
-                <td>
-                    <a th:href="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id}" th:text="${alue.otsikko}">1</a> 
+                    <a th:href="${'/uHup/alue/' + alue.id}" th:text="${alue.otsikko}">1</a> 
                 </td>
                 <td>
                     <span th:text="${alue.Viestimaara}">1</span>
@@ -87,20 +85,26 @@
                 <td>
                     <span th:text="${alue.ViimeisinViesti}">esimerkki</span>
                 </td>
+                <td>
+                    <form th:if="${kayttaja.BModeraattori}" th:action="${'/uHup/alue/poista'}" method="POST" style="text-align: center">
+                        <input type="hidden" name="poisto" th:value="${alue.id}"></input>
+                        <button style="background: orange; color: blue" type="submit">Poista</button>
+                    </form>
+                </td>
             </tr>
         </table>
-    
+
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
-    
-        <form th:action="${'/uHup/kayttaja/' + kayttaja.id}" method="POST">
+
+        <form th:action="${'/uHup/alue'}" method="POST">
             <h4>Lisää uusi aihe:</h4>
             <input  type="text" name="Otsikko"/>  
             <br></br>
             <button style="color: blue; background-color: orange" type="submit">LISÄÄ</button>
         </form>
-    
+
     </body>
-    
-    
-    
+
+
+
 </html>

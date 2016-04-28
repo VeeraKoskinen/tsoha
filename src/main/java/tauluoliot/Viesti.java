@@ -19,6 +19,7 @@ public class Viesti {
     private Keskustelu keskustelu;
     private String viesti;
     private Date lahetysaika;
+    private String kirjoittaja;
 
     public Viesti() {
     }
@@ -37,12 +38,16 @@ public class Viesti {
         return id;
     }
     
-    public void setKayttaja(Kayttaja kaytttaja) {
+    public void setKayttaja(Kayttaja kayttaja) {
         this.kayttaja = kayttaja;
     }
     
     public Kayttaja getKayttaja() {
         return kayttaja;
+    }
+    
+    public int getKayttajaId() {
+        return kayttaja.getId();
     }
     
     public void setKeskustelu(Keskustelu keskustelu) {
@@ -67,5 +72,13 @@ public class Viesti {
     
     public String getViesti() {
         return viesti;
+    }
+    
+    public void setKirjoittaja(String kirjoittaja) {
+        this.kirjoittaja = kirjoittaja;
+    }
+    
+    public String getKirjoittaja() {
+        return kirjoittaja;
     }
 }

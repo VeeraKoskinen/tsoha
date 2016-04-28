@@ -48,6 +48,7 @@ public class Main {
         
         //aloitussivu
         get("/uHup", (req, res) -> {
+            
             HashMap map = new HashMap<>(); 
             
             return new ModelAndView(map, "aloitussivu");
@@ -56,7 +57,8 @@ public class Main {
             if (t.rightToJoin(req.queryParams("kayttajanimi"), req.queryParams("salasana"))) {
                 String nimi = req.queryParams("kayttajanimi");
                 int id = kayttajaDao.findOneWithUsername(nimi).getId();
-                res.redirect("/uHup/kayttaja/" + id);
+                req.session(true).attribute("kayttajaId",id);               
+                res.redirect("/uHup/alue");
                 return "Kirjautuminen onnistui!";
             }
                 res.redirect("/uHup");
@@ -65,8 +67,8 @@ public class Main {
         
         
         //aluelistaus
-        get("/uHup/kayttaja/:id", (req, res) -> {
-            int id = Integer.parseInt(req.params(":id"));
+        get("/uHup/alue", (req, res) -> {
+            int id = req.session().attribute("kayttajaId");
             HashMap map = new HashMap<>();
             if (t.moderaattori(id)) {
                 map.put("moderaattori", kayttajaDao.findOne(id));
@@ -76,17 +78,21 @@ public class Main {
             map.put("alueet", alueDao.findAll());
             return new ModelAndView(map, "aluelistaus");
         }, new ThymeleafTemplateEngine());
-        post("/uHup/kayttaja/:id", (req, res) -> { 
-            int id = Integer.parseInt(req.params(":id"));
+        post("/uHup/alue", (req, res) -> { 
             alueDao.addNew(req.queryParams("Otsikko"));
-            res.redirect("/uHup/kayttaja/" + id);
+            res.redirect("/uHup/alue");
             return "Lisäys onnistui!";
+        });
+        post("/uHup/alue/poista", (req, res) -> {
+            alueDao.delete(Integer.parseInt(req.queryParams("poisto")));
+            res.redirect("/uHup/alue");
+            return "Poisto onnistui!";
         });
         
         
         //keskustelulistaus
-        get("/uHup/kayttaja/:kayttajaid/alue/:id", (req, res) -> {
-            int id1 = Integer.parseInt(req.params(":kayttajaid"));
+        get("/uHup/alue/:id", (req, res) -> {
+            int id1 = req.session().attribute("kayttajaId");
             int id2 = Integer.parseInt(req.params(":id"));
             HashMap map = new HashMap<>();
             if (t.moderaattori(id1)) {
@@ -98,25 +104,25 @@ public class Main {
             map.put("keskustelut", keskusteluDao.findAllTenFirst(id2));   
             return new ModelAndView(map, "keskustelulistaus");
         }, new ThymeleafTemplateEngine());
-        post("/uHup/kayttaja/:kayttajaid/alue/:id", (req, res) -> {
-            int id1 = Integer.parseInt(req.params(":kayttajaid"));
+        post("/uHup/alue/:id", (req, res) -> {
             int id = Integer.parseInt(req.params(":id"));
             keskusteluDao.addNew(req.queryParams("otsikko"), id);
-            res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id);
+            res.redirect("/uHup/alue/" + id);
             return "Lisäys onnistui!";
+        });
+        post("/uHup/alue/:alueid/poisto", (req, res) -> {
+            int id = Integer.parseInt(req.params(":alueid"));
+            keskusteluDao.delete(Integer.parseInt(req.queryParams("poisto")));
+            res.redirect("/uHup/alue/" + id);
+            return "Poisto onnistui!";
         });
         
         //viestilistaus
-        get("/uHup/kayttaja/:kayttajaid/alue/:alueid/keskustelu/:id", (req, res) -> {
-            int id1 = Integer.parseInt(req.params(":kayttajaid"));
+        get("/uHup/alue/:alueid/keskustelu/:id", (req, res) -> {
+            int id1 = req.session().attribute("kayttajaId");
             int id2 = Integer.parseInt(req.params(":alueid"));
             int id3 = Integer.parseInt(req.params(":id"));
             HashMap map = new HashMap<>();
-            if (t.moderaattori(id1)) {
-                map.put("moderaattori", kayttajaDao.findOne(id1));
-            } else {
-                
-            }
             map.put("uloskirjaaja", kayttajaDao.findOne(id1));
             map.put("kayttaja", kayttajaDao.findOne(id1));
             map.put("alue", alueDao.findOne(id2));
@@ -124,20 +130,19 @@ public class Main {
             map.put("viestit", viestiDao.findAll(id3));          
             return new ModelAndView(map, "viestilistaus");
         }, new ThymeleafTemplateEngine());
-        post("/uHup/kayttaja/:kayttajaid/alue/:alueid/keskustelu/:id", (req, res) -> {
-            int id1 = Integer.parseInt(req.params(":kayttajaid"));
+        post("/uHup/alue/:alueid/keskustelu/:id", (req, res) -> {
+            int id1 = req.session().attribute("kayttajaId");
             int id2 = Integer.parseInt(req.params(":alueid"));
             int id3 = Integer.parseInt(req.params(":id"));
             viestiDao.addNew(req.queryParams("viesti"), id1, id3);
-            res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id2 + "/keskustelu/" + id3);
+            res.redirect("/uHup/alue/" + id2 + "/keskustelu/" + id3);
             return "Lähetys onnistui!";
         });
-        post("/uHup/kayttaja/:kayttajaid/alue/:alueid/keskustelu/:id/poisto", (req, res) -> {
-            int id1 = Integer.parseInt(req.params(":kayttajaid"));
-            int id2 = Integer.parseInt(req.params(":alueid"));
-            int id3 = Integer.parseInt(req.params(":id"));
+        post("/uHup/alue/:alueid/keskustelu/:id/poisto", (req, res) -> {
+            int alueId = Integer.parseInt(req.params(":alueid"));
+            int keskusteluId = Integer.parseInt(req.params(":id"));
             viestiDao.delete(Integer.parseInt(req.queryParams("poisto")));
-            res.redirect("/uHup/kayttaja/" + id1 + "/alue/" + id2 + "/keskustelu/" + id3);
+            res.redirect("/uHup/alue/" + alueId + "/keskustelu/" + keskusteluId);
             return "Poisto onnistui!";
         });
         

@@ -104,7 +104,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
  
     public ArrayList findAll(int offset, int kAlue) throws SQLException {
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS ID, k.otsikko AS Keskustelunaihe, k.alue AS AlueenId, COUNT(v.id) AS Maara, MAX(v.aika) AS Paiva FROM Alue a LEFT JOIN Keskustelu k ON a.id = k.alue LEFT JOIN Viesti v ON k.id = v.keskustelu WHERE a.id = ? GROUP BY k.id ORDER BY Paiva DESC LIMIT 10 OFFSET ?;");            
+            PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS ID, k.otsikko AS Keskustelunaihe, k.alue AS AlueenId, COUNT(v.id) AS Maara, MAX(v.aika) AS Paiva FROM Keskustelu k LEFT JOIN Viesti v ON k.id = v.keskustelu WHERE k.alue = ? GROUP BY k.id ORDER BY Paiva DESC LIMIT 10 OFFSET ?;");            
                                                                 
             stmt.setInt(1, kAlue);
             stmt.setInt(2, offset * 10);

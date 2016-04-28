@@ -70,13 +70,13 @@
         <br></br> 
 
 
-        <h2 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h2>
+        <h1 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h1>
         <br></br>
 
 
         <h4 style="font-family:Copperplate Gothic Bold; text-align: left" th:text="${alue.otsikko}"></h4>
 
-        <h1 style="width:50%" th:text="${keskustelu.otsikko}"></h1>
+        <h1 th:text="${keskustelu.otsikko}"></h1>
 
 
         <table  style="width:100%">
@@ -87,9 +87,9 @@
             </tr>
             <tr class="reunustettu" th:each="viesti: ${viestit}">
                 <td th:text="${viesti.viesti}">viesti</td>
-                <td th:text="${kayttaja.kayttajanimi}" style="text-align: center">nimi</td>
+                <td th:text="${viesti.kirjoittaja}" style="text-align: center">nimi</td>
                 <td>
-                    <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id + '/poisto'}" method="POST" style="text-align: center">
+                    <form th:if="${viesti.kayttajaId == kayttaja.id} or ${kayttaja.bModeraattori}" th:action="${'/uHup/alue/' + alue.id + '/keskustelu/' + keskustelu.id + '/poisto'}" method="POST" style="text-align: center">
                         <input type="hidden" name="poisto" th:value="${viesti.id}"></input>
                         <button style="background: orange; color: blue" type="submit">Poista</button>
                     </form>
@@ -98,7 +98,7 @@
         </table>    
         
 
-        <form style="width:50%" th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
+        <form style="width:50%" th:action="${'/uHup/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
             <textarea name="viesti" rows="10" cols="50" placeholder="kirjoita viestisi tähän"></textarea>
             <br></br>
             <button style="color: blue; background-color: orange" type="submit">Lähetä</button>

@@ -58,7 +58,7 @@
         <a name="uloskirjaaja" style="text-align: left"  th:href="${'/uHup'}">Kirjaudu ulos</a>
         <br></br> 
 
-        <h2 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h2>
+        <h1 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h1>
         <br></br>
 
         <h1 style="font-family:Permanent Marker; text-align: left" th:text="${alue.otsikko}" ></h1>
@@ -66,18 +66,15 @@
 
         <table style="width:100%">
             <tr>
-                <th>ID</th>
-                <th>Keskustelut </th>
-                <th>Viestejä yhteensä </th>
-                <th>Viimeisin viesti </th>
+                <th style="width:30%">Keskustelut </th>
+                <th style="width:30%">Viestejä yhteensä </th>
+                <th style="width:30%">Viimeisin viesti </th>
+                <th style="width:10%"></th>
             </tr>
 
             <tr th:each="keskustelu: ${keskustelut}">
                 <td>
-                    <span th:text="${keskustelu.id}">1</span>
-                </td>
-                <td>
-                    <a th:href="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" th:text="${keskustelu.otsikko}">1</a>
+                    <a th:href="${'/uHup/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" th:text="${keskustelu.otsikko}">1</a>
                 </td>
                 <td>
                     <span th:text="${keskustelu.viestimaara}">1</span>
@@ -85,13 +82,19 @@
                 <td>
                     <span th:text="${keskustelu.viimeisinViesti}">esimerkki</span>
                 </td>
+                <td>
+                    <form th:if="${kayttaja.BModeraattori}" th:action="${'/uHup/alue/' + alue.id + '/poisto'}" method="POST" style="text-align: center">
+                        <input type="hidden" name="poisto" th:value="${keskustelu.id}"></input>
+                        <button style="background: orange; color: blue" type="submit">Poista</button>
+                    </form>
+                </td>    
             </tr>
 
         </table>
         
         <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
-        <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/alue/' + alue.id}" method="POST">
+        <form th:action="${'/uHup/alue/' + alue.id}" method="POST">
             <h4>Aloita uusi keskustelu:</h4>
             <input  type="text" name="otsikko"/>  
             <br></br>

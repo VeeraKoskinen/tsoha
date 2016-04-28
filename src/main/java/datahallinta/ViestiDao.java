@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package datahallinta;
+
 import datahallinta.*;
 import tauluoliot.*;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
-
 
 /**
  *
@@ -30,7 +30,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
     @Override
     public Viesti findOne(Integer key) throws SQLException {
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE id = ?");
+            PreparedStatement stmt = connection.prepareStatement("SELECT ka.kayttajanimi AS kirjoittaja, v.* FROM Viesti v, Kayttaja ka WHERE v.id = ? AND v.kayttaja = ka.id");
             stmt.setObject(1, key);
 
             ResultSet rs = stmt.executeQuery();
@@ -47,6 +47,8 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
             Integer keskustelu = rs.getInt("keskustelu");
             Integer kayttaja = rs.getInt("kayttaja");
+            String kirjoittaja = rs.getString("kirjoittaja");
+            v.setKirjoittaja(kirjoittaja);
 
             rs.close();
             stmt.close();
@@ -63,7 +65,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
     public ArrayList findAll(int keskustelu) throws SQLException {
 
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Alue a, Keskustelu k, Viesti v WHERE a.id = k.alue AND k.id = v.keskustelu AND v.keskustelu = ? ORDER BY v.aika;");
+            PreparedStatement stmt = connection.prepareStatement("SELECT ka.kayttajanimi AS kirjoittaja, v.* FROM Alue a, Keskustelu k, Viesti v, Kayttaja ka WHERE a.id = k.alue AND k.id = v.keskustelu AND v.keskustelu = ? AND v.kayttaja = ka.id ORDER BY v.aika;");
             stmt.setInt(1, keskustelu);
             ResultSet rs = stmt.executeQuery();
 
@@ -79,7 +81,10 @@ public class ViestiDao implements Dao<Viesti, Integer> {
                 String viesti = rs.getString("viesti");
 
                 Viesti v = new Viesti(id, viesti, aika);
-
+                
+                String kirjoittaja = rs.getString("kirjoittaja");
+                v.setKirjoittaja(kirjoittaja);
+                v.setKayttaja(kayttajaDao.findOne(rs.getInt("kayttaja")));
                 viestit.add(v);
 
                 Integer keskustelunaloitus = rs.getInt("keskustelu");
@@ -114,7 +119,6 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM Viesti WHERE id = ?;");
             stmt.setObject(1, key);
             stmt.executeUpdate();
-           
             stmt.close();
             connection.close();
         }

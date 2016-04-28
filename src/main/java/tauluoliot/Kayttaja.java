@@ -72,6 +72,10 @@ public class Kayttaja {
         this.moderaattori = oikeus;
     }
     
+    public boolean getBModeraattori() {
+        return moderaattori == 1;
+    }
+    
     public String toString() {
         if (moderaattori == 1) {
         return "ID: " + id + "\n Kayttajanimi: " + kayttajanimi + "\n Salasana: " + salasana + "\n S-posti: " + sahkoposti + "Moderaattori: " + "KYLLÄ";
