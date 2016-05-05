@@ -148,44 +148,58 @@ public class Main {
         
         
         // hallintasivu
-         get("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> {
-            int id = Integer.parseInt(req.params(":kayttajaid"));
+         get("/uHup/hallitsemaailmaasi987654321/nyt", (req, res) -> {
+            int id = req.session().attribute("kayttajaId");
             HashMap map = new HashMap<>(); 
-            map.put("kayttaja", kayttajaDao.findOne(id));
-            map.put("etsihenkilo", kayttajaDao.findOneWithUsername(req.queryParams("etsihenkilo")));
+            map.put("henkilo", kayttajaDao.findOne(id));
+            map.put("kayttajat", kayttajaDao.findAll());
             return new ModelAndView(map, "hallintasivu");
         }, new ThymeleafTemplateEngine());
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt", (req, res) -> { 
-            int id = Integer.parseInt(req.params(":kayttajaid")); 
+        post("/uHup/hallitsemaailmaasi987654321/nyt", (req, res) -> {  
             kayttajaDao.addNew(req.queryParams("sahkoposti"), req.queryParams("kayttajanimi"), req.queryParams("salasana"), Integer.parseInt(req.queryParams("moderaattori")));
-            res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
+            res.redirect("/uHup/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";
         });
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt/poistakayttaja", (req, res) -> { 
-            int id = Integer.parseInt(req.params(":kayttajaid"));
+        post("/uHup/hallitsemaailmaasi987654321/nyt/poistakayttaja", (req, res) -> { 
             kayttajaDao.delete(Integer.parseInt(req.queryParams("kayttajanpoisto")));
-            res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
-            return "Lähetys onnistui!";
-        });
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt/poistaalue", (req, res) -> { 
-            int id = Integer.parseInt(req.params(":kayttajaid"));
-            alueDao.delete(Integer.parseInt(req.queryParams("alueenpoisto")));
-            res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
-            return "Lähetys onnistui!";
-        });
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt/poistakeskustelu", (req, res) -> { 
-            int id = Integer.parseInt(req.params(":kayttajaid"));
-            keskusteluDao.delete(Integer.parseInt(req.queryParams("keskustelunpoisto")));
-            res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
-            return "Lähetys onnistui!";
-        });
-        post("/uHup/kayttaja/:kayttajaid/hallitsemaailmaasi987654321/nyt/poistaviesti", (req, res) -> { 
-            int id = Integer.parseInt(req.params(":kayttajaid"));
-            viestiDao.delete(Integer.parseInt(req.queryParams("viestinpoisto")));
-            res.redirect("/uHup/kayttaja/" + id + "/hallitsemaailmaasi987654321/nyt");
+            res.redirect("/uHup/hallitsemaailmaasi987654321/nyt");
             return "Lähetys onnistui!";
         });
         
-    }    
+        // kayttajan muokkaussivu
+        get("/uHup/kayttajanmuokkaus/:kayttajaid", (req, res) -> {
+            int sessioId = req.session().attribute("kayttajaId");
+            int kayttajaId = Integer.parseInt(req.params(":kayttajaid"));
+            HashMap map = new HashMap<>();
+            map.put("henkilo", kayttajaDao.findOne(sessioId));
+            map.put("kayttaja",kayttajaDao.findOne(kayttajaId));
+            return new ModelAndView(map, "kayttajamuokkaus"); 
+        }, new ThymeleafTemplateEngine());
+        post("/uHup/kayttajanmuokkaus/:kayttajaid", (req, res) -> {
+            int id = Integer.parseInt(req.params(":kayttajaid"));
+            kayttajaDao.updateKayttajanimi(req.queryParams("kayttajanimi"), id);
+            res.redirect("/uHup/kayttajanmuokkaus/" + id);
+            return "Lähetys onnistui!";
+        });
+        post("/uHup/kayttajanmuokkaus/:kayttajaid/salasana", (req, res) -> {
+            int id = Integer.parseInt(req.params(":kayttajaid"));
+            kayttajaDao.updateSalasana(req.queryParams("salasana"), id);
+            res.redirect("/uHup/kayttajanmuokkaus/" + id);
+            return "Lähetys onnistui!";
+        });
+        post("/uHup/kayttajanmuokkaus/:kayttajaid/sahkoposti", (req, res) -> {
+            int id = Integer.parseInt(req.params(":kayttajaid"));
+            kayttajaDao.updateSahkoposti(req.queryParams("sahkoposti"), id);
+            res.redirect("/uHup/kayttajanmuokkaus/" + id);
+            return "Lähetys onnistui!";
+        });
+        post("/uHup/kayttajanmuokkaus/:kayttajaid/moderaattori", (req, res) -> {
+            int id = Integer.parseInt(req.params(":kayttajaid"));
+            kayttajaDao.updateModeraattori(Integer.parseInt(req.queryParams("moderaattori")), id);
+            res.redirect("/uHup/kayttajanmuokkaus/" + id);
+            return "Lähetys onnistui!";
+        });
+    
+    }   
     
 }

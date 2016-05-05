@@ -62,7 +62,7 @@
                 <h2 style="font-family:Copperplate Gothic Bold; text-align: left">uHup</h2>
             </div>
             <div style="width:50%;float:left">
-                <a th:href="${'/uHup/kayttaja/' + kayttaja.id}" style="font-family: Arial; text-align: right">Palaa aluelistaussivulle</a>
+                <a th:href="${'/uHup/alue'}" style="font-family: Arial; text-align: right">Palaa aluelistaussivulle</a>
             </div>
             <div style="clear:both">
             </div>    
@@ -70,7 +70,7 @@
         <br></br>
 
 
-        <h1>HALLINTAJÄRJESTELMÄ</h1>
+        <h1 style="text-align: center">HALLINTAJÄRJESTELMÄ</h1>
 
 
         <br></br>
@@ -78,7 +78,7 @@
             <div style="width:33%;float:left">
                 <h3> Lisää uusi käyttäjä:</h3>
 
-                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt'}" method="POST">
+                <form th:action="${'/uHup/hallitsemaailmaasi987654321/nyt'}" method="POST">
                     <h5>Sähköposti:</h5>
                     <input type="text" name="sahkoposti" placeholder="matti.meikalainen@mm.com"/>
                     <br></br>
@@ -96,47 +96,35 @@
                 </form>
             </div>
 
-            <div style="width:33%;float:left">
-                <h3>Hae käyttäjää:</h3>
-                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/etsihenkilo'}" method='GET'>
-                    <input type="text" name="etsihenkilo" placeholder="MikkoMallikas"/>
-                    <button style="background: greenyellow; color: blue" type="submit">Etsi</button>
-                    <br></br>
-                </form>
-                <h4>Käyttäjän tiedot:</h4>
-                <ul>
-                    <li th:text="${kayttaja}"></li>
-                </ul>
-                <br></br>
-                <h3>Poista käyttäjä:</h3>
-                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/poistakayttaja'}" method="POST">
-                    <input type="text" name="kayttajanpoisto" placeholder="nro"/>
+            <div style="width:66%;float:left">
+                  
+                <h3 style="text-align: left">Poista käyttäjä:</h3>
+                <form style="text-align: left" th:action="${'/uHup/hallitsemaailmaasi987654321/nyt/poistakayttaja'}" method="POST">
+                    <input type="text" name="kayttajanpoisto" placeholder="id"/>
                     <button style="background: greenyellow; color: blue" type="submit">Poista</button>
                 </form>
-            </div> 
+                <br></br><br></br>
+                <table>
+                    <tr>
+                        <th style="width:30%; color: black">Käyttäjänimi</th>
+                        <th style="width:60%; color: black">Sähköposti</th>
+                        <th style="width:10%; color: black">ID</th>
+                    </tr>
+                    <tr style="color: black" th:each="kayttaja: ${kayttajat}">
+                        <td>
+                            <a th:if="${henkilo.BModeraattori}" th:href="${'/uHup/kayttajanmuokkaus/' + kayttaja.id}" th:text="${kayttaja.kayttajanimi}">1</a>
+                        </td>
+                        <td>
+                            <span th:text="${kayttaja.sahkoposti}">1</span>
+                        </td>
+                        <td>
+                            <span th:text="${kayttaja.id}">1</span>
+                        </td>
+                    </tr>    
 
-            <div style="width:33%;float:left">
-                <h3 style="text-align: center">Poista alue:</h3>
-                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/poistaalue'}" method="POST" style="text-align: center">
-                    <input type="text" name="alueenpoisto" placeholder="id"/>
-                    <br></br>
-                    <button style="background: greenyellow; color: blue" type="submit">Poista</button>
-                </form>
-                <br></br>
-                <h3 style="text-align: center">Poista keskustelu:</h3>
-                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/poistakeskustelu'}" method="POST" style="text-align: center">
-                    <input type="text" name="keskustelunpoisto" placeholder="id"/>
-                    <br></br>
-                    <button style="background: greenyellow; color: blue" type="submit">Poista</button>
-                </form>
-                <br></br>
-                <h3 style="text-align: center">Poista viesti:</h3>
-                <form th:action="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt/poistaviesti'}" method="POST" style="text-align: center">
-                    <input type="text" name="viestinpoisto" placeholder="id"/>
-                    <br></br>
-                    <button style="background: greenyellow; color: blue" type="submit">Poista</button>
-                </form>
-            </div>
+                </table>
+               
+            </div> 
 
         </div>
     </body>    

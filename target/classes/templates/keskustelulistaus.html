@@ -54,7 +54,7 @@
     </head>
 
     <body>
-        <a name="moderaattori" style="text-align: right"  th:href="${'/uHup/kayttaja/' + kayttaja.id + '/hallitsemaailmaasi987654321/nyt'}">Siirry järjestelmänhallintaan</a>
+        <a name="moderaattori" style="text-align: right" th:if="${kayttaja.BModeraattori}"  th:href="${'/uHup/hallitsemaailmaasi987654321/nyt'}">Siirry järjestelmänhallintaan</a>
         <a name="uloskirjaaja" style="text-align: left"  th:href="${'/uHup'}">Kirjaudu ulos</a>
         <br></br> 
 

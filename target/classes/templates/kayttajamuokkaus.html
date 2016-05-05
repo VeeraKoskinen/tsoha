@@ -1,0 +1,125 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>uHup</title>
+        <meta charset="utf-8" />
+
+        <style>
+
+            table, th, td{
+                border: 1px solid dodgerblue;
+                border-collapse: collapse;
+                text-align: center;
+            }
+            th, td{
+                padding: 5px;
+                text-align: center;
+            }
+            th{
+                text-align: center;
+            }
+
+            body {
+                background-color: dodgerblue;
+                font-family: Arial Black;
+                font-style: normal;
+                color: greenyellow;
+                text-align: center;
+
+            }
+
+            input{
+                border-radius: 5px    
+            }
+
+            /* unvisited link */
+            a:link {
+                color: black;
+            }
+
+            /* visited link */
+            a:visited {
+                color: darkslateblue;
+            }
+
+            /* mouse over link */
+            a:hover {
+                color: purple;
+            }
+
+            /* selected link */
+            a:active {
+                color: purple;
+            }
+        </style>
+    </head>
+
+    <body>
+        
+        <a name="moderaattori" style="text-align: right" th:if="${henkilo.BModeraattori}" th:href="${'/uHup/hallitsemaailmaasi987654321/nyt'}">Siirry takaisin järjestelmänhallintaan</a>
+        <a name="uloskirjaaja" style="text-align: left"  th:href="${'/uHup'}">Kirjaudu ulos</a>
+        <a th:if="${henkilo.id == kayttaja.id}" th:href="${'/uHup/alue'}" style="font-family: Arial; text-align: right">Palaa aluelistaussivulle</a>
+        <br></br><br></br><br></br>
+        <h1 style="text-align: center">MUOKKAA TIETOJA</h1>    
+        <br></br><br></br><br></br>
+        <table style="width:100%">
+            <tr>
+                <th>Käyttäjän nykyiset tiedot:</th>
+                <th>Muokkaa</th>
+            </tr>
+            <tr style="text-align: right">
+                <td>
+                    <h4>Käyttäjänimi: </h4>
+                    <span th:text="${kayttaja.kayttajanimi}">1</span>
+                </td>
+                <td>
+                    <form th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id}" method="POST">
+                        <h4>Vaihda käyttäjänimi:</h4>
+                        <input type="text" name="kayttajanimi" placeholder="HennaTatuointi"></input>
+                        <button style="background: greenyellow; color: blue" type="submit">OK</button>
+                    </form>
+                </td>
+            </tr>
+            <tr style="text-align: right">
+                <td>
+                    <h4>Sähköposti: </h4>
+                    <span th:text="${kayttaja.sahkoposti}">1</span>
+                </td>
+                <td>
+                    <form th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id + '/sahkoposti'}" method="POST">
+                        <h4>Vaihda sähköposti:</h4>
+                        <input type="text" name="sahkoposti" placeholder="mirkku@helsinki.com"></input>
+                        <button style="background: greenyellow; color: blue" type="submit">OK</button>
+                    </form>
+                </td>
+            </tr> 
+            <tr style="text-align: right">
+                <td>
+                    <h4>ID: </h4>
+                    <span th:text="${kayttaja.id}">1</span> 
+                </td>
+                <td>
+                    <form th:if="${henkilo.id == kayttaja.id}" th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id + '/salasana'}" method="POST">
+                        <h4>Vaihda salasanaa: </h4>
+                        <input type="text" name="salasana" placeholder="mi84as"></input>
+                        <button style="background: greenyellow; color: blue" type="submit">OK</button>
+                    </form>
+                </td>
+            </tr> 
+            <tr style="text-align: right">    
+                <td>
+                    <h4>Moderaattori: </h4>
+                    <span th:text="${kayttaja.moderaattori}">1</span> 
+                </td>
+                <td>
+                    <form th:if="${henkilo.BModeraattori}" th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id + '/moderaattori'}" method="POST">
+                        <h4>Muuta oikeuksia: </h4>
+                        <input type="text" name="moderaattori" placeholder="0 tai 1"></input>
+                        <button style="background: greenyellow; color: blue" type="submit">OK</button>
+                    </form>
+                </td>
+            </tr>                   
+        </table>    
+
+    </body>
+</html>
