@@ -97,18 +97,14 @@
             </div>
 
             <div style="width:66%;float:left">
-                  
-                <h3 style="text-align: left">Poista käyttäjä:</h3>
-                <form style="text-align: left" th:action="${'/uHup/hallitsemaailmaasi987654321/nyt/poistakayttaja'}" method="POST">
-                    <input type="text" name="kayttajanpoisto" placeholder="id"/>
-                    <button style="background: greenyellow; color: blue" type="submit">Poista</button>
-                </form>
+
                 <br></br><br></br>
                 <table>
                     <tr>
-                        <th style="width:30%; color: black">Käyttäjänimi</th>
+                        <th style="width:25%; color: black">Käyttäjänimi</th>
                         <th style="width:60%; color: black">Sähköposti</th>
-                        <th style="width:10%; color: black">ID</th>
+                        <th style="width:5%; color: black">ID</th>
+                        <th style="width:5%;"></th>
                     </tr>
                     <tr style="color: black" th:each="kayttaja: ${kayttajat}">
                         <td>
@@ -120,10 +116,16 @@
                         <td>
                             <span th:text="${kayttaja.id}">1</span>
                         </td>
+                        <td>
+                            <form style="text-align: left" th:action="${'/uHup/hallitsemaailmaasi987654321/nyt/poistakayttaja'}" method="POST">
+                                <input type="hidden" name="kayttajanpoisto" th:value="${kayttaja.id}"></input>
+                                <button style="background: greenyellow; color: blue" type="submit">Poista</button>
+                            </form>
+                        </td>    
                     </tr>    
 
                 </table>
-               
+
             </div> 
 
         </div>

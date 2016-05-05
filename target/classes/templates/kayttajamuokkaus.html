@@ -114,7 +114,10 @@
                 <td>
                     <form th:if="${henkilo.BModeraattori}" th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id + '/moderaattori'}" method="POST">
                         <h4>Muuta oikeuksia: </h4>
-                        <input type="text" name="moderaattori" placeholder="0 tai 1"></input>
+                        <input type="radio" name="moderaattori" value="0">Tavallinen käyttäjä</input>
+                        <br></br>
+                        <input type="radio" name="moderaattori" value="1">Moderaattori</input> 
+                        <br></br>
                         <button style="background: greenyellow; color: blue" type="submit">OK</button>
                     </form>
                 </td>

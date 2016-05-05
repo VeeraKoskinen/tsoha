@@ -1,9 +1,9 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-            <title>uHup</title>
-            <meta charset="utf-8" />
-            <style>
+        <title>uHup</title>
+        <meta charset="utf-8" />
+        <style>
 
             table, th, td{
                 border: 1px solid dodgerblue;
@@ -74,6 +74,7 @@
                 <th style="width:30%">Viestejä yhteensä </th>
                 <th style="width:30%">Viimeisin viesti </th>
                 <th style="width:10%"></th>
+                
             </tr>
 
             <tr th:each="alue: ${alueet}" >   
@@ -92,6 +93,7 @@
                         <button style="background: orange; color: blue" type="submit">Poista</button>
                     </form>
                 </td>
+              
             </tr>
         </table>
 
