@@ -169,7 +169,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     }
 
     public void addNew(String otsikko, int alue) throws SQLException {
-        if (otsikko != null && otsikko.length() < 999) {
+        if (otsikko != null && otsikko.length() < 999 && !otsikko.equals("")) {
             Connection connection = data.getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (otsikko, alue) VALUES(?, ?);");
 

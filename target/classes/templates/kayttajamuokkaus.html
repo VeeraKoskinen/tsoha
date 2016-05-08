@@ -118,13 +118,8 @@
                         <br></br>
                         <input type="radio" name="moderaattori" value="1" required="required">Moderaattori</input> 
                         <br></br>
-                        <button style="background: greenyellow; color: blue" type="submit" onclick="myFunction()">OK</button>
+                        <button style="background: greenyellow; color: blue" type="submit" onclick="return confirm('Haluatko varmasti muuttaa oikeuksia?')">OK</button>
                     </form>
-                    <script>
-                        function myFunction() {
-                            confirm("Haluatko varmasti muuttaa oikeuksia?");
-                        }
-                    </script>
                 </td>
             </tr>                   
         </table>    

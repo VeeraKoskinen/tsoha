@@ -51,7 +51,7 @@ public class AlueDao implements Dao<Alue, Integer> {
             return a;
         }
     }
-    
+
     public ArrayList findAll() throws SQLException {
         return findAll(0);
     }
@@ -60,9 +60,9 @@ public class AlueDao implements Dao<Alue, Integer> {
         try (Connection connection = data.getConnection()) {
             PreparedStatement stmt = connection.prepareStatement("SELECT a.id AS ID, a.otsikko AS Otsikko, COUNT(v.id) AS Maara, MAX(v.aika) AS Paiva FROM Alue a LEFT JOIN Keskustelu k  ON a.id = k.alue LEFT JOIN Viesti v ON k.id=v.keskustelu GROUP BY a.id ORDER BY Paiva DESC LIMIT 10 OFFSET ?;");
             stmt.setInt(1, offset * 10);
-            
+
             ResultSet rs = stmt.executeQuery();
-            
+
             Map<Integer, List<Alue>> palstanAlueet = new HashMap<>();
 //
             ArrayList<Alue> alueet = new ArrayList<>();
@@ -86,7 +86,7 @@ public class AlueDao implements Dao<Alue, Integer> {
             stmt.close();
 
             return alueet;
-        }   
+        }
     }
 
     @Override
@@ -103,19 +103,21 @@ public class AlueDao implements Dao<Alue, Integer> {
             stmt.executeUpdate();
         }
     }
-    
+
     public void addNew(String otsikko) throws SQLException {
-        Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue (otsikko) VALUES(?);");
-        stmt.setString(1, otsikko);
-        stmt.executeUpdate();
-        
-        stmt.close();
-        connection.close();
+        if (otsikko != null && !otsikko.equals("")) {
+            Connection connection = data.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue (otsikko) VALUES(?);");
+            stmt.setString(1, otsikko);
+            stmt.executeUpdate();
+
+            stmt.close();
+            connection.close();
+        }
     }
-    
+
     public void updateHeadline(int id, String headline) throws SQLException {
-         try (Connection connection = data.getConnection()) {
+        try (Connection connection = data.getConnection()) {
             if (headline != null && !headline.equals("")) {
                 PreparedStatement stmt1 = connection.prepareStatement("UPDATE Alue SET otsikko = ? WHERE id = ?;");
                 stmt1.setObject(1, headline);
