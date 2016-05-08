@@ -7,7 +7,6 @@
 
 [nettisivu](https://evening-dawn-79596.herokuapp.com/uHup)
 
-[aluelistaussivu](https://evening-dawn-79596.herokuapp.com/uHup/kayttaja/2)
 
 
 Kayttajatunnus: MikkoMallikas, Salasana: mi84as
