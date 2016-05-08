@@ -89,7 +89,7 @@
                 <td>
                     <form th:if="${kayttaja.BModeraattori}" th:action="${'/uHup/alue/poista'}" method="POST" style="text-align: center">
                         <input type="hidden" name="poisto" th:value="${alue.id}"></input>
-                        <button style="background: orange; color: blue" type="submit">Poista</button>
+                        <button style="background: orange; color: blue" type="submit" onclick="myFunction()">Poista</button>
                     </form>
                 </td>
                 <td>
@@ -98,6 +98,11 @@
                         <input type="text" name="muokkaus" th:placeholder="${alue.otsikko}" required="required" maxlength="100"></input>
                         <button style="background: orange; color: blue" type="submit">Muokkaa</button>
                     </form>
+                    <script>
+                        function myFunction() {
+                            confirm("Haluatko varmasti poistaa tämän?");
+                        }
+                    </script>
                 </td>    
             </tr>
         </table>

@@ -86,8 +86,13 @@
                 <td>
                     <form th:if="${kayttaja.BModeraattori}" th:action="${'/uHup/alue/' + alue.id + '/poisto'}" method="POST" style="text-align: center">
                         <input type="hidden" name="poisto" th:value="${keskustelu.id}"></input>
-                        <button style="background: orange; color: blue" type="submit">Poista</button>
+                        <button style="background: orange; color: blue" type="submit" onclick="myFunction()">Poista</button>
                     </form>
+                    <script>
+                        function myFunction() {
+                            confirm("Haluatko varmasti poistaa tämän?");
+                        }
+                    </script>
                 </td>    
             </tr>
 

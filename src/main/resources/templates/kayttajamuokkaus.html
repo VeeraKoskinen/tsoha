@@ -55,7 +55,7 @@
     </head>
 
     <body>
-        
+
         <a name="moderaattori" style="text-align: right" th:if="${henkilo.BModeraattori}" th:href="${'/uHup/hallitsemaailmaasi987654321/nyt'}">Siirry takaisin järjestelmänhallintaan</a>
         <a name="uloskirjaaja" style="text-align: left"  th:href="${'/uHup'}">Kirjaudu ulos</a>
         <a th:if="${henkilo.id == kayttaja.id}" th:href="${'/uHup/alue'}" style="font-family: Arial; text-align: right">Palaa aluelistaussivulle</a>
@@ -118,8 +118,13 @@
                         <br></br>
                         <input type="radio" name="moderaattori" value="1" required="required">Moderaattori</input> 
                         <br></br>
-                        <button style="background: greenyellow; color: blue" type="submit">OK</button>
+                        <button style="background: greenyellow; color: blue" type="submit" onclick="myFunction()">OK</button>
                     </form>
+                    <script>
+                        function myFunction() {
+                            confirm("Haluatko varmasti muuttaa oikeuksia?");
+                        }
+                    </script>
                 </td>
             </tr>                   
         </table>    
