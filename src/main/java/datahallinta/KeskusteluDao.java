@@ -23,9 +23,10 @@ import java.util.Map;
  * @author veerakoskinen
  */
 public class KeskusteluDao implements Dao<Keskustelu, Integer> {
+
     private Database data;
     private AlueDao alueDao;
-    
+
     public KeskusteluDao(Database data, AlueDao dao) {
         this.data = data;
         this.alueDao = dao;
@@ -33,8 +34,8 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
     @Override
     public Keskustelu findOne(Integer key) throws SQLException {
-          try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?;");                                                              
+        try (Connection connection = data.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu WHERE id = ?;");
             stmt.setObject(1, key);
 
             ResultSet rs = stmt.executeQuery();
@@ -57,11 +58,11 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             return k;
         }
     }
-    
+
     public ArrayList pureFindAll() throws SQLException {
         try (Connection connection = data.getConnection()) {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelu;");
-            
+
             ResultSet rs = stmt.executeQuery();
 //
             Map<Integer, List<Keskustelu>> alueenKeskustelut = new HashMap<>();
@@ -75,7 +76,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 //
                 Keskustelu k = new Keskustelu(id, otsikko);
                 keskustelut.add(k);
-                
+
                 Integer kAlue = rs.getInt("alue");
 
                 if (!alueenKeskustelut.containsKey(kAlue)) {
@@ -83,7 +84,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
                 }
                 alueenKeskustelut.get(kAlue).add(k);
             }
-            
+
             ArrayList<Alue> alueet = alueDao.findAll();
             for (Alue a : alueet) {
                 if (!alueenKeskustelut.containsKey(a.getId())) {
@@ -95,20 +96,20 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
                 }
             }
             return keskustelut;
-        }  
+        }
     }
-       
+
     public ArrayList findAllTenFirst(int alue) throws SQLException {
         return findAll(0, alue);
     }
- 
+
     public ArrayList findAll(int offset, int kAlue) throws SQLException {
         try (Connection connection = data.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS ID, k.otsikko AS Keskustelunaihe, k.alue AS AlueenId, COUNT(v.id) AS Maara, MAX(v.aika) AS Paiva FROM Keskustelu k LEFT JOIN Viesti v ON k.id = v.keskustelu WHERE k.alue = ? GROUP BY k.id ORDER BY Paiva DESC LIMIT 10 OFFSET ?;");            
-                                                                
+            PreparedStatement stmt = connection.prepareStatement("SELECT k.id AS ID, k.otsikko AS Keskustelunaihe, k.alue AS AlueenId, COUNT(v.id) AS Maara, MAX(v.aika) AS Paiva FROM Keskustelu k LEFT JOIN Viesti v ON k.id = v.keskustelu WHERE k.alue = ? GROUP BY k.id ORDER BY Paiva DESC LIMIT 10 OFFSET ?;");
+
             stmt.setInt(1, kAlue);
             stmt.setInt(2, offset * 10);
-            
+
             ResultSet rs = stmt.executeQuery();
 //
             Map<Integer, List<Keskustelu>> alueenKeskustelut = new HashMap<>();
@@ -129,7 +130,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
                     alueenKeskustelut.put(alue, new ArrayList<>());
                 }
                 alueenKeskustelut.get(alue).add(k);
-                
+
                 Integer maara = rs.getInt("Maara");
                 java.sql.Date paiva = rs.getDate("Paiva");
 
@@ -152,34 +153,34 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
             return keskustelut;
         }
-        
+
     }
-        
 
     @Override
     public void delete(Integer key) throws SQLException {
-           try (Connection connection = data.getConnection()) {
+        try (Connection connection = data.getConnection()) {
             PreparedStatement stmt1 = connection.prepareStatement("DELETE FROM Viesti WHERE keskustelu = ?;");
             stmt1.setObject(1, key);
             stmt1.executeUpdate();
             PreparedStatement stmt2 = connection.prepareStatement("DELETE FROM Keskustelu WHERE id = ?;");
             stmt2.setObject(1, key);
             stmt2.executeUpdate();
-        }    
+        }
     }
-    
+
     public void addNew(String otsikko, int alue) throws SQLException {
-        Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (otsikko, alue) VALUES(?, ?);");
-        
-        stmt.setString(1, otsikko);
-        stmt.setInt(2, alue);
-        
-        stmt.executeUpdate();
-        
-        stmt.close();
-        connection.close();
-        
+        if (otsikko != null && otsikko.length() < 999) {
+            Connection connection = data.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (otsikko, alue) VALUES(?, ?);");
+
+            stmt.setString(1, otsikko);
+            stmt.setInt(2, alue);
+
+            stmt.executeUpdate();
+
+            stmt.close();
+            connection.close();
+        }
     }
-    
+
 }

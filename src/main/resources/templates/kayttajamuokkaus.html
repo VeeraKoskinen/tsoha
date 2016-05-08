@@ -75,7 +75,7 @@
                 <td>
                     <form th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id}" method="POST">
                         <h4>Vaihda käyttäjänimi:</h4>
-                        <input type="text" name="kayttajanimi" placeholder="HennaTatuointi"></input>
+                        <input type="text" name="kayttajanimi" placeholder="HennaTatuointi" required="required" maxlength="100"></input>
                         <button style="background: greenyellow; color: blue" type="submit">OK</button>
                     </form>
                 </td>
@@ -88,7 +88,7 @@
                 <td>
                     <form th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id + '/sahkoposti'}" method="POST">
                         <h4>Vaihda sähköposti:</h4>
-                        <input type="text" name="sahkoposti" placeholder="mirkku@helsinki.com"></input>
+                        <input type="text" name="sahkoposti" placeholder="mirkku@helsinki.com" required="required" maxlength="100"></input>
                         <button style="background: greenyellow; color: blue" type="submit">OK</button>
                     </form>
                 </td>
@@ -101,7 +101,7 @@
                 <td>
                     <form th:if="${henkilo.id == kayttaja.id}" th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id + '/salasana'}" method="POST">
                         <h4>Vaihda salasanaa: </h4>
-                        <input type="text" name="salasana" placeholder="mi84as"></input>
+                        <input type="text" name="salasana" placeholder="mi84as" required="required" maxlength="100"></input>
                         <button style="background: greenyellow; color: blue" type="submit">OK</button>
                     </form>
                 </td>
@@ -114,9 +114,9 @@
                 <td>
                     <form th:if="${henkilo.BModeraattori}" th:action="${'/uHup/kayttajanmuokkaus/' + kayttaja.id + '/moderaattori'}" method="POST">
                         <h4>Muuta oikeuksia: </h4>
-                        <input type="radio" name="moderaattori" value="0">Tavallinen käyttäjä</input>
+                        <input type="radio" name="moderaattori" value="0" required="required">Tavallinen käyttäjä</input>
                         <br></br>
-                        <input type="radio" name="moderaattori" value="1">Moderaattori</input> 
+                        <input type="radio" name="moderaattori" value="1" required="required">Moderaattori</input> 
                         <br></br>
                         <button style="background: greenyellow; color: blue" type="submit">OK</button>
                     </form>

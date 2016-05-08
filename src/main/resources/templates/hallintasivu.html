@@ -80,16 +80,19 @@
 
                 <form th:action="${'/uHup/hallitsemaailmaasi987654321/nyt'}" method="POST">
                     <h5>Sähköposti:</h5>
-                    <input type="text" name="sahkoposti" placeholder="matti.meikalainen@mm.com"/>
+                    <input type="text" name="sahkoposti" placeholder="matti.meikalainen@mm.com" required="required" maxlength="100"/>
                     <br></br>
                     <h5>Kayttajanimi:</h5>
-                    <input type="text" name="kayttajanimi" placeholder="MattiMeikalainen"/>
+                    <input type="text" name="kayttajanimi" placeholder="MattiMeikalainen" required="required" maxlength="100"/>
                     <br></br>
                     <h5>Salasana:</h5>
-                    <input type="text" name="salasana" placeholder="Ma13Me"/>
+                    <input type="text" name="salasana" placeholder="Ma13Me" required="required" maxlength="100"/>
                     <br></br>
                     <h5>Moderaattori:</h5>
-                    <input type="text" name="moderaattori" placeholder="0 = ei oikeuksia tai 1 = oikeudet" />
+                    <input type="radio" name="moderaattori" value="0" required="required">Tavallinen käyttäjä</input>
+                    <br></br>
+                    <input type="radio" name="moderaattori" value="1" required="required">Moderaattori</input> 
+                    <br></br>
                     <br></br>
                     <br></br>
                     <button style="background: greenyellow; color: blue" type="submit">Lisää Käyttäjä</button>

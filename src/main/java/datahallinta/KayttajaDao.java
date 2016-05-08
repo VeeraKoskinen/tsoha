@@ -136,6 +136,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException {
+
         try (Connection connection = data.getConnection()) {
             PreparedStatement stmt1 = connection.prepareStatement("DELETE FROM Viesti WHERE kayttaja = ?;");
             stmt1.setObject(1, key);
@@ -147,30 +148,34 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
     }
 
     public void addNew(String sahkoposti, String kayttajanimi, String salasana, int moderaattori) throws SQLException {
-        Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Kayttaja (sahkoposti, kayttajanimi, salasana, moderaattori) VALUES(?, ?, ?, ?);");
-        stmt.setString(1, sahkoposti);
-        stmt.setString(2, kayttajanimi);
-        stmt.setString(3, salasana);
-        stmt.setInt(4, moderaattori);
-        stmt.executeUpdate();
+        if (sahkoposti != null && kayttajanimi != null && salasana != null && sahkoposti.length() < 100 && kayttajanimi.length() < 100 && salasana.length() < 100) {
+            Connection connection = data.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Kayttaja (sahkoposti, kayttajanimi, salasana, moderaattori) VALUES(?, ?, ?, ?);");
+            stmt.setString(1, sahkoposti);
+            stmt.setString(2, kayttajanimi);
+            stmt.setString(3, salasana);
+            stmt.setInt(4, moderaattori);
+            stmt.executeUpdate();
 
-        stmt.close();
-        connection.close();
+            stmt.close();
+            connection.close();
+        }
     }
 
     public void addNewWithKey(int key, String sahkoposti, String kayttajanimi, String salasana, int moderaattori) throws SQLException {
-        Connection connection = data.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Kayttaja (id, sahkoposti, kayttajanimi, salasana, moderaattori) VALUES(?, ?, ?, ?, ?);");
-        stmt.setInt(1, key);
-        stmt.setString(2, sahkoposti);
-        stmt.setString(3, kayttajanimi);
-        stmt.setString(4, salasana);
-        stmt.setInt(5, moderaattori);
-        stmt.executeUpdate();
+        if (sahkoposti != null && kayttajanimi != null && salasana != null && sahkoposti.length() < 100 && kayttajanimi.length() < 100 && salasana.length() < 100) {
+            Connection connection = data.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Kayttaja (id, sahkoposti, kayttajanimi, salasana, moderaattori) VALUES(?, ?, ?, ?, ?);");
+            stmt.setInt(1, key);
+            stmt.setString(2, sahkoposti);
+            stmt.setString(3, kayttajanimi);
+            stmt.setString(4, salasana);
+            stmt.setInt(5, moderaattori);
+            stmt.executeUpdate();
 
-        stmt.close();
-        connection.close();
+            stmt.close();
+            connection.close();
+        }
     }
 
     public void updateKayttajanimi(String kayttajanimi, int id) throws SQLException {
@@ -208,10 +213,10 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
 
     public void updateModeraattori(int mod, int id) throws SQLException {
         try (Connection connection = data.getConnection()) {
-                PreparedStatement stmt1 = connection.prepareStatement("UPDATE Kayttaja SET moderaattori= ? WHERE id = ?;");
-                stmt1.setObject(1, mod);
-                stmt1.setObject(2, id);
-                stmt1.executeUpdate();
+            PreparedStatement stmt1 = connection.prepareStatement("UPDATE Kayttaja SET moderaattori= ? WHERE id = ?;");
+            stmt1.setObject(1, mod);
+            stmt1.setObject(2, id);
+            stmt1.executeUpdate();
         }
     }
 

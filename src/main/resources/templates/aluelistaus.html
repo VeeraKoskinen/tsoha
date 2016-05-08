@@ -69,12 +69,11 @@
 
         <table style="width:100%">
             <tr>
-
-                <th style="width:30%">Alueet </th>
-                <th style="width:30%">Viestejä yhteensä </th>
-                <th style="width:30%">Viimeisin viesti </th>
-                <th style="width:10%"></th>
-                
+                <th style="width:25%">Alueet </th>
+                <th style="width:20%">Viestejä</th>
+                <th style="width:20%">Viimeisin</th>
+                <th style="width:5%"></th>
+                <th style="width:30%"></th>
             </tr>
 
             <tr th:each="alue: ${alueet}" >   
@@ -93,7 +92,13 @@
                         <button style="background: orange; color: blue" type="submit">Poista</button>
                     </form>
                 </td>
-              
+                <td>
+                    <form th:if="${kayttaja.BModeraattori}" th:action="${'/uHup/alue/muokkaa'}" method="POST" style="text-align: center">
+                        <input type="hidden" name="alueid" th:value="${alue.id}"></input>
+                        <input type="text" name="muokkaus" th:placeholder="${alue.otsikko}" required="required" maxlength="100"></input>
+                        <button style="background: orange; color: blue" type="submit">Muokkaa</button>
+                    </form>
+                </td>    
             </tr>
         </table>
 
@@ -101,7 +106,7 @@
 
         <form th:action="${'/uHup/alue'}" method="POST">
             <h4>Lisää uusi aihe:</h4>
-            <input  type="text" name="Otsikko"/>  
+            <input  type="text" name="Otsikko" required="required" maxlength="100"/>  
             <br></br>
             <button style="color: blue; background-color: orange" type="submit">LISÄÄ</button>
         </form>

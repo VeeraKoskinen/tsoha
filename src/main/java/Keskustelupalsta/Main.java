@@ -88,11 +88,11 @@ public class Main {
             res.redirect("/uHup/alue");
             return "Poisto onnistui!";
         });
-//        post("/uHup/alue/muokkaa", (req, res) -> {
-//            alueDao.updateHeadline(Integer.parseInt(req.queryParams("alueid")),req.queryParams("muokkaus"));
-//            res.redirect("/uHup/alue");
-//            return "Muokkaus onnistui!";
-//        });
+        post("/uHup/alue/muokkaa", (req, res) -> {
+            alueDao.updateHeadline(Integer.parseInt(req.queryParams("alueid")),req.queryParams("muokkaus"));
+            res.redirect("/uHup/alue");
+            return "Muokkaus onnistui!";
+        });
         
         
         

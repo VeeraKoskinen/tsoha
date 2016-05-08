@@ -100,7 +100,7 @@
         
 
         <form style="width:50%" th:action="${'/uHup/alue/' + alue.id + '/keskustelu/' + keskustelu.id}" method="POST">
-            <textarea name="viesti" rows="10" cols="50" placeholder="kirjoita viestisi tähän"></textarea>
+            <textarea name="viesti" rows="10" cols="50" placeholder="kirjoita viestisi tähän" maxlength="50000"></textarea>
             <br></br>
             <button style="color: blue; background-color: orange" type="submit">Lähetä</button>
         </form>

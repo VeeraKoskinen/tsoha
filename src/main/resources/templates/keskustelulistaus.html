@@ -97,7 +97,7 @@
 
         <form th:action="${'/uHup/alue/' + alue.id}" method="POST">
             <h4>Aloita uusi keskustelu:</h4>
-            <input  type="text" name="otsikko"/>  
+            <input  type="text" name="otsikko" required="required" maxlength="1000"/>  
             <br></br>
             <button style="color: blue; background-color: orange" type="submit">LISÄÄ</button>
         </form>
