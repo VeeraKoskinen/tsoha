@@ -148,7 +148,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
     }
 
     public void addNew(String sahkoposti, String kayttajanimi, String salasana, int moderaattori) throws SQLException {
-        if (sahkoposti != null && kayttajanimi != null && salasana != null && sahkoposti.length() < 100 && kayttajanimi.length() < 100 && salasana.length() < 100) {
+        if ((sahkoposti != null && !sahkoposti.equals("")) && (kayttajanimi != null && !kayttajanimi.equals("")) && (salasana != null && !salasana.equals("")) && sahkoposti.length() < 100 && kayttajanimi.length() < 100 && salasana.length() < 100) {
             Connection connection = data.getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Kayttaja (sahkoposti, kayttajanimi, salasana, moderaattori) VALUES(?, ?, ?, ?);");
             stmt.setString(1, sahkoposti);
@@ -180,7 +180,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
 
     public void updateKayttajanimi(String kayttajanimi, int id) throws SQLException {
         try (Connection connection = data.getConnection()) {
-            if (kayttajanimi != null) {
+            if (kayttajanimi != null && !kayttajanimi.equals("")) {
                 PreparedStatement stmt1 = connection.prepareStatement("UPDATE Kayttaja SET kayttajanimi= ? WHERE id = ?;");
                 stmt1.setObject(1, kayttajanimi);
                 stmt1.setObject(2, id);
@@ -191,7 +191,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
 
     public void updateSahkoposti(String sahkoposti, int id) throws SQLException {
         try (Connection connection = data.getConnection()) {
-            if (sahkoposti != null) {
+            if (sahkoposti != null && !sahkoposti.equals("")) {
                 PreparedStatement stmt1 = connection.prepareStatement("UPDATE Kayttaja SET sahkoposti= ? WHERE id = ?;");
                 stmt1.setObject(1, sahkoposti);
                 stmt1.setObject(2, id);
@@ -202,7 +202,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
 
     public void updateSalasana(String salasana, int id) throws SQLException {
         try (Connection connection = data.getConnection()) {
-            if (salasana != null) {
+            if (salasana != null && !salasana.equals("")) {
                 PreparedStatement stmt1 = connection.prepareStatement("UPDATE Kayttaja SET salasana = ? WHERE id = ?;");
                 stmt1.setObject(1, salasana);
                 stmt1.setObject(2, id);

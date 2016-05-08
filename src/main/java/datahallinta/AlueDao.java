@@ -116,7 +116,7 @@ public class AlueDao implements Dao<Alue, Integer> {
     
     public void updateHeadline(int id, String headline) throws SQLException {
          try (Connection connection = data.getConnection()) {
-            if (headline != null) {
+            if (headline != null && !headline.equals("")) {
                 PreparedStatement stmt1 = connection.prepareStatement("UPDATE Alue SET otsikko = ? WHERE id = ?;");
                 stmt1.setObject(1, headline);
                 stmt1.setObject(2, id);
